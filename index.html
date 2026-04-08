@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BD Practical Lab | Fast & Modern Web Solutions</title>
+  <meta name="description" content="BD Practical Lab: Lightning-fast, practical, and animated web templates ready for GitHub Pages.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <a href="#" class="logo">BD<span>PracticalLab</span></a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <h1 class="fade-in">Build. Test. Deploy.</h1>
+        <p class="fade-in delay-1">Lightning-fast, practical web solutions crafted for modern developers.</p>
+        <a href="#services" class="btn fade-in delay-2">Explore Services</a>
+      </div>
+      <div class="hero-bg"></div>
+    </section>
+
+    <section id="services" class="services">
+      <h2 class="section-title">What We Do</h2>
+      <div class="grid">
+        <div class="card scroll-reveal">
+          <h3>⚡ Performance</h3>
+          <p>Optimized for 95+ Lighthouse scores with zero bloat.</p>
+        </div>
+        <div class="card scroll-reveal">
+          <h3>🎨 Modern UI</h3>
+          <p>Clean, animated, and fully responsive designs.</p>
+        </div>
+        <div class="card scroll-reveal">
+          <h3>🌐 GitHub Ready</h3>
+          <p>Deploy instantly with GitHub Pages & CI/CD workflows.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="about-content scroll-reveal">
+        <h2>About BD Practical Lab</h2>
+        <p>We focus on practical, production-ready code. No fluff. Just fast, reliable, and maintainable web solutions that work out of the box.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <h2 class="section-title">Get In Touch</h2>
+      <!-- Replace with Formspree/Netlify Forms for static hosting -->
+      <form class="contact-form scroll-reveal" action="https://formspree.io/f/your-form-id" method="POST">
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+        <button type="submit" class="btn">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> BD Practical Lab. Built for speed & simplicity.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
