@@ -1,30 +1,30 @@
-// Theme Toggle
+// 🔥 THEME TOGGLE (FIXED & FOUC-FREE)
 const themeToggle = document.getElementById('theme-toggle');
 const html = document.documentElement;
 
-const savedTheme = localStorage.getItem('theme') || 'dark';
-if (savedTheme === 'light') html.classList.add('light-mode');
+// Load saved theme or default to light
+const savedTheme = localStorage.getItem('theme') || 'light';
+if (savedTheme === 'dark') html.classList.add('dark-mode');
 
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
-    html.classList.toggle('light-mode');
-    const isLight = html.classList.contains('light-mode');
-    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    html.classList.toggle('dark-mode');
+    const isDark = html.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
     updateIcon();
   });
 
   function updateIcon() {
-    const isLight = html.classList.contains('light-mode');
-    themeToggle.innerHTML = isLight ? '🌙' : '☀️';
-    themeToggle.setAttribute('aria-label', isLight ? 'ডার্ক মোডে যান' : 'লাইট মোডে যান');
+    const isDark = html.classList.contains('dark-mode');
+    themeToggle.innerHTML = isDark ? '☀️' : '🌙';
+    themeToggle.setAttribute('aria-label', isDark ? 'লাইট মোডে যান' : 'ডার্ক মোডে যান');
   }
   updateIcon();
 }
 
-// Mobile Menu
+// 📱 MOBILE MENU
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
-
 if (menuToggle && navLinks) {
   menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
   document.querySelectorAll('.nav-links a').forEach(link => {
@@ -32,7 +32,7 @@ if (menuToggle && navLinks) {
   });
 }
 
-// Active Nav Highlight
+// 🔗 ACTIVE NAV HIGHLIGHT
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 document.querySelectorAll('.nav-links a').forEach(link => {
   const href = link.getAttribute('href');
@@ -41,7 +41,16 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   }
 });
 
-// Scroll Reveal
+// 🌟 CARD GLOW FOLLOW MOUSE
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--mx', `${((e.clientX - rect.left) / rect.width) * 100}%`);
+    card.style.setProperty('--my', `${((e.clientY - rect.top) / rect.height) * 100}%`);
+  });
+});
+
+// 📜 SCROLL REVEAL ANIMATION
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -53,5 +62,5 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 
-// Dynamic Year
+// 📅 DYNAMIC YEAR
 document.getElementById('year').textContent = new Date().getFullYear();
