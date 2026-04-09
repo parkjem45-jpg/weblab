@@ -1,24 +1,52 @@
-// Auto-update copyright year
-document.getElementById('year').textContent = new Date().getFullYear();
+// Theme Toggle
+const themeToggle = document.getElementById('theme-toggle');
+const html = document.documentElement;
 
-// Mobile menu toggle
+const savedTheme = localStorage.getItem('theme') || 'dark';
+if (savedTheme === 'light') html.classList.add('light-mode');
+
+themeToggle.addEventListener('click', () => {
+  html.classList.toggle('light-mode');
+  const isLight = html.classList.contains('light-mode');
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  updateIcon();
+});
+
+function updateIcon() {
+  const isLight = html.classList.contains('light-mode');
+  themeToggle.innerHTML = isLight ? '🌙' : '☀️';
+  themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+}
+updateIcon();
+
+// Mobile Menu
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
-
-// Close menu when a link is clicked
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', () => navLinks.classList.remove('active'));
 });
 
-// Scroll reveal animation
+// Active Nav Highlight
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+document.querySelectorAll('.nav-links a').forEach(link => {
+  const href = link.getAttribute('href');
+  if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+    link.classList.add('active');
+  }
+});
+
+// Scroll Reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('visible');
-      observer.unobserve(entry.target); // Only animate once
+      observer.unobserve(entry.target);
     }
   });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+// Dynamic Year
+document.getElementById('year').textContent = new Date().getFullYear();

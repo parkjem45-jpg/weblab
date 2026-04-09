@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services | BD Practical Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');</script>
+</head>
+<body>
+  <header class="header">
+    <nav class="nav">
+      <a href="index.html" class="logo">BD<span>PracticalLab</span></a>
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html" class="active">Services</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀️</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" style="min-height: 50vh; padding-top: 8rem;">
+      <div class="hero-content scroll-reveal">
+        <h1>Our Services</h1>
+        <p>End-to-end web solutions tailored to your project's scale and goals.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="service-list">
+        <div class="service-item scroll-reveal">
+          <div class="service-icon">🌐</div>
+          <div>
+            <h3>Static Website Development</h3>
+            <p>Blazing fast, secure, and SEO-friendly sites built with HTML, CSS, and JS. Perfect for portfolios, landing pages, and business sites.</p>
+          </div>
+        </div>
+        <div class="service-item scroll-reveal">
+          <div class="service-icon">📱</div>
+          <div>
+            <h3>Responsive UI/UX Design</h3>
+            <p>Modern, accessible interfaces that look stunning on every device. Built with component-driven architecture.</p>
+          </div>
+        </div>
+        <div class="service-item scroll-reveal">
+          <div class="service-icon">⚡</div>
+          <div>
+            <h3>Performance Optimization</h3>
+            <p>Audit and optimize existing sites for Core Web Vitals, Lighthouse scores, and sub-second load times.</p>
+          </div>
+        </div>
+        <div class="service-item scroll-reveal">
+          <div class="service-icon">🚀</div>
+          <div>
+            <h3>GitHub Pages & CI/CD Setup</h3>
+            <p>Automated deployment pipelines, custom domains, SSL, and zero-downtime updates.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="social-links">
+      <a href="#" aria-label="GitHub">🐙</a>
+      <a href="#" aria-label="Twitter">🐦</a>
+      <a href="#" aria-label="LinkedIn">💼</a>
+    </div>
+    <p>&copy; <span id="year"></span> BD Practical Lab. Crafted for speed & simplicity.</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
