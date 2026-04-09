@@ -36,49 +36,54 @@
   </script>
 </head>
 <body>
-  <header class="header">
-    <nav class="nav">
-      <a href="index.html" class="logo">বিডি <span>প্র্যাকটিক্যাল ল্যাব</span></a>
-      <button class="menu-toggle" aria-label="মেনু টগল করুন">☰</button>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">হোম</a></li>
-        <li><a href="services.html">প্র্যাকটিক্যাল</a></li>
-        <li><a href="about.html">আমাদের সম্পর্কে</a></li>
-        <li><a href="contact.html">যোগাযোগ</a></li>
-        <li id="auth-links">
-          <a href="login.html" class="btn btn-sm">লগইন</a>
-          <a href="register.html" class="btn btn-outline btn-sm">রেজিস্ট্রেশন</a>
-        </li>
-        <li><button id="theme-toggle" class="theme-toggle" aria-label="থিম পরিবর্তন">☀️</button></li>
-      </ul>
-    </nav>
-<!-- Glowing News Marquee -->
+
+<div class="nav-overlay" id="nav-overlay"></div>
+<header class="header">
+  <nav class="nav">
+    <a href="index.html" class="logo">BD<span>PracticalLab</span></a>
+    <button class="menu-toggle" aria-label="Menu">☰</button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html" class="active" data-bn="হোম" data-en="Home">হোম</a></li>
+      <li><a href="services.html" data-bn="প্র্যাকটিক্যাল" data-en="Practicals">প্র্যাকটিক্যাল</a></li>
+      <li><a href="about.html" data-bn="আমাদের সম্পর্কে" data-en="About">আমাদের সম্পর্কে</a></li>
+      <li><a href="contact.html" data-bn="যোগাযোগ" data-en="Contact">যোগাযোগ</a></li>
+      <li id="auth-links">
+        <a href="login.html" class="btn btn-sm" data-bn="লগইন" data-en="Login">লগইন</a>
+        <a href="register.html" class="btn btn-outline btn-sm" data-bn="রেজিস্ট্রেশন" data-en="Register">রেজিস্ট্রেশন</a>
+      </li>
+      <li><button id="lang-toggle" class="theme-toggle" aria-label="Language">🌐 EN</button></li>
+      <li><button id="theme-toggle" class="theme-toggle" aria-label="Theme">🌙</button></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Marquee -->
 <div class="glowing-marquee">
   <span class="live-badge">🔴 LIVE</span>
   <div class="marquee-track">
-    <span class="marquee-item">🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত</span>
-    <span class="marquee-item">📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে</span>
-    <span class="marquee-item">⚠️ জরুরি নোটিশ: সকল বোর্ডের প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি</span>
-    <span class="marquee-item">🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য</span>
-    <span class="marquee-item">🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত</span>
-    <span class="marquee-item">📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে</span>
-    <span class="marquee-item">⚠️ জরুরি নোটিশ: সকল বোর্ডের প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি</span>
-    <span class="marquee-item">🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য</span>
+    <span class="marquee-item" data-bn="🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত" data-en="🔥 HSC 2026 Practical Exam Routine Published">🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত</span>
+    <span class="marquee-item" data-bn="📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে" data-en="📖 SSC Physics Practical Notes Updated">📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে</span>
+    <span class="marquee-item" data-bn="⚠️ জরুরি নোটিশ: প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি" data-en="⚠️ Notice: Practical Copy Submission Deadline Feb 10">⚠️ জরুরি নোটিশ: প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি</span>
+    <span class="marquee-item" data-bn="🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য" data-en="🎯 Free Viva Preparation Guide Now Downloadable">🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য</span>
+    <!-- Duplicate for seamless scroll -->
+    <span class="marquee-item" data-bn="🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত" data-en="🔥 HSC 2026 Practical Exam Routine Published">🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত</span>
+    <span class="marquee-item" data-bn="📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে" data-en="📖 SSC Physics Practical Notes Updated">📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে</span>
+    <span class="marquee-item" data-bn="⚠️ জরুরি নোটিশ: প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি" data-en="⚠️ Notice: Practical Copy Submission Deadline Feb 10">⚠️ জরুরি নোটিশ: প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি</span>
+    <span class="marquee-item" data-bn="🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য" data-en="🎯 Free Viva Preparation Guide Now Downloadable">🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য</span>
   </div>
 </div>
-  </header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-content scroll-reveal">
-        <h1>HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার নির্ভরযোগ্য সঙ্গী</h1>
-        <p>সর্বশেষ প্র্যাকটিক্যাল গাইড, নোটস, ভাইভা প্রশ্ন এবং পরীক্ষার খবর এক জায়গায়</p>
-        <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-          <a href="services.html" class="btn">প্র্যাকটিক্যাল দেখুন</a>
-          <a href="register.html" class="btn btn-outline">এখনই যুক্ত হোন</a>
-        </div>
-      </div>
-    </section>
+<!-- Hero Section (Add data attributes) -->
+<section class="hero">
+  <div class="hero-content scroll-reveal">
+    <h1 class="glow-text" data-bn="HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার নির্ভরযোগ্য সঙ্গী" data-en="Your Trusted Companion for HSC & SSC Practical Exams">HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার নির্ভরযোগ্য সঙ্গী</h1>
+    <p data-bn="সর্বশেষ প্র্যাকটিক্যাল গাইড, নোটস, ভাইভা প্রশ্ন এবং পরীক্ষার খবর এক জায়গায়" data-en="Latest practical guides, notes, viva questions & exam updates in one place">সর্বশেষ প্র্যাকটিক্যাল গাইড, নোটস, ভাইভা প্রশ্ন এবং পরীক্ষার খবর এক জায়গায়</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
+      <a href="services.html" class="btn" data-bn="প্র্যাকটিক্যাল দেখুন" data-en="View Practicals">প্র্যাকটিক্যাল দেখুন</a>
+      <a href="register.html" class="btn btn-outline" data-bn="এখনই যুক্ত হোন" data-en="Join Now">এখনই যুক্ত হোন</a>
+    </div>
+  </div>
+</section>
 
     <!-- Latest News Section -->
     <section>
