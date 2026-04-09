@@ -2,43 +2,54 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ড্যাশবোর্ড | বিডি প্র্যাকটিক্যাল ল্যাব</title>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script type="module">
-    import { auth, onAuthStateChanged } from './firebase-config.js';
-    
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = 'login.html';
-      } else {
-        document.getElementById('user-name').textContent = user.displayName || 'ব্যবহারকারী';
-        document.getElementById('user-email').textContent = user.email;
-      }
-    });
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') document.documentElement.classList.add('dark-mode');
+    })();
   </script>
+  <style>
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-top: 0.5rem;
+    }
+    .dashboard-hero {
+      min-height: 40vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 7rem 1.5rem 3rem;
+    }
+  </style>
 </head>
 <body>
+  <div class="nav-overlay" id="nav-overlay"></div>
   <header class="header">
     <nav class="nav">
       <a href="index.html" class="logo">বিডি <span>প্র্যাকটিক্যাল ল্যাব</span></a>
-      <button class="menu-toggle">☰</button>
-      <ul class="nav-links">
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+      <ul class="nav-links" id="navLinks">
         <li><a href="dashboard.html" class="active">ড্যাশবোর্ড</a></li>
         <li><a href="services.html">প্র্যাকটিক্যাল</a></li>
         <li><a href="index.html">হোম</a></li>
-        <li><button id="logout-btn" class="btn btn-sm">লগআউট</button></li>
-        <li><button id="theme-toggle" class="theme-toggle">☀️</button></li>
+        <li><button id="logoutBtn" class="btn btn-sm">লগআউট</button></li>
+        <li><button id="themeToggle" class="theme-toggle">🌙</button></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <section class="hero" style="min-height: 40vh; padding-top: 8rem;">
+    <section class="dashboard-hero">
       <div class="hero-content">
-        <h1>স্বাগতম, <span id="user-name">ব্যবহারকারী</span>!</h1>
-        <p id="user-email" style="color: var(--text-muted);"></p>
+        <h1>স্বাগতম, <span id="userName">ব্যবহারকারী</span>!</h1>
+        <p id="userEmail" style="color: var(--text-muted);"></p>
       </div>
     </section>
 
@@ -48,15 +59,18 @@
       </div>
       <div class="grid">
         <div class="card">
-          <h3>📝 জমা দেওয়া হয়েছে</h3>
+          <div class="icon">📝</div>
+          <h3>জমা দেওয়া হয়েছে</h3>
           <p class="stat-number">0</p>
         </div>
         <div class="card">
-          <h3>⏳ বাকি আছে</h3>
+          <div class="icon">⏳</div>
+          <h3>বাকি আছে</h3>
           <p class="stat-number">0</p>
         </div>
         <div class="card">
-          <h3>✅ সম্পূর্ণ</h3>
+          <div class="icon">✅</div>
+          <h3>সম্পূর্ণ</h3>
           <p class="stat-number">0</p>
         </div>
       </div>
@@ -68,36 +82,56 @@
       </div>
       <div class="grid">
         <div class="card">
-          <h3>🔬 পদার্থবিজ্ঞান প্র্যাকটিক্যাল</h3>
+          <div class="icon">🔬</div>
+          <h3>পদার্থবিজ্ঞান প্র্যাকটিক্যাল</h3>
           <p>ভেক্টর যোগ, স্লাইড ক্যালিপার্স, স্ক্রু গজ</p>
-          <a href="#" class="btn btn-sm">শুরু করুন</a>
+          <a href="#" class="btn btn-sm" style="margin-top: 1rem; display: inline-block;">শুরু করুন</a>
         </div>
         <div class="card">
-          <h3>⚗️ রসায়ন প্র্যাকটিক্যাল</h3>
+          <div class="icon">⚗️</div>
+          <h3>রসায়ন প্র্যাকটিক্যাল</h3>
           <p>লবণ বিশ্লেষণ, টাইট্রেশন, pH নির্ণয়</p>
-          <a href="#" class="btn btn-sm">শুরু করুন</a>
+          <a href="#" class="btn btn-sm" style="margin-top: 1rem; display: inline-block;">শুরু করুন</a>
         </div>
         <div class="card">
-          <h3>🧬 জীববিজ্ঞান প্র্যাকটিক্যাল</h3>
+          <div class="icon">🧬</div>
+          <h3>জীববিজ্ঞান প্র্যাকটিক্যাল</h3>
           <p>অণুবীক্ষণ যন্ত্র, কোষ বিভাজন, উদ্ভিদ শনাক্তকরণ</p>
-          <a href="#" class="btn btn-sm">শুরু করুন</a>
+          <a href="#" class="btn btn-sm" style="margin-top: 1rem; display: inline-block;">শুরু করুন</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <p>&copy; <span id="year"></span> বিডি প্র্যাকটিক্যাল ল্যাব</p>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> বিডি প্র্যাকটিক্যাল ল্যাব</p>
+    </div>
   </footer>
 
-  <script type="module">
-    import { auth, signOut } from './firebase-config.js';
-    
-    document.getElementById('logout-btn').addEventListener('click', async () => {
-      await signOut(auth);
-      window.location.href = 'index.html';
-    });
-  </script>
   <script src="script.js"></script>
+  <script type="module">
+    import { auth, onAuthStateChanged, signOut } from './firebase-config.js';
+    
+    const userNameSpan = document.getElementById('userName');
+    const userEmailSpan = document.getElementById('userEmail');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        window.location.href = 'login.html';
+      } else {
+        userNameSpan.textContent = user.displayName || 'ব্যবহারকারী';
+        userEmailSpan.textContent = user.email;
+      }
+    });
+    
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', async () => {
+        await signOut(auth);
+        window.location.href = 'index.html';
+      });
+    }
+  </script>
 </body>
 </html>

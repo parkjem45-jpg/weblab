@@ -1,840 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>BD PracticalLab | Neon Glow Login</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: linear-gradient(145deg, #f0f4fa 0%, #d9e2ef 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            transition: background 0.3s ease, color 0.2s ease;
-            position: relative;
-        }
-
-        /* Dark mode variables */
-        body.dark {
-            background: linear-gradient(145deg, #0a0f1a 0%, #0f1422 100%);
-            color: #eef2ff;
-        }
-
-        /* ========= GLOWING EFFECTS (NEON TOUCH) ========= */
-        @keyframes softGlow {
-            0% { box-shadow: 0 0 5px rgba(28, 110, 143, 0.3), 0 0 10px rgba(28, 110, 143, 0.2); }
-            50% { box-shadow: 0 0 15px rgba(28, 110, 143, 0.6), 0 0 25px rgba(28, 110, 143, 0.3); }
-            100% { box-shadow: 0 0 5px rgba(28, 110, 143, 0.3), 0 0 10px rgba(28, 110, 143, 0.2); }
-        }
-
-        @keyframes borderGlow {
-            0% { border-color: rgba(28, 110, 143, 0.4); box-shadow: 0 0 0 0 rgba(28, 110, 143, 0.2); }
-            50% { border-color: rgba(28, 110, 143, 0.9); box-shadow: 0 0 0 4px rgba(28, 110, 143, 0.3); }
-            100% { border-color: rgba(28, 110, 143, 0.4); box-shadow: 0 0 0 0 rgba(28, 110, 143, 0.2); }
-        }
-
-        /* header with subtle glow */
-        .header {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            width: 100%;
-            transition: background 0.2s;
-        }
-
-        body.dark .header {
-            background: rgba(18, 24, 38, 0.92);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(90, 200, 250, 0.2);
-        }
-
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.85rem 1.25rem;
-            max-width: 1280px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-decoration: none;
-            background: linear-gradient(135deg, #0b2b44, #1c6e8f);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            letter-spacing: -0.3px;
-            white-space: nowrap;
-            transition: text-shadow 0.3s;
-        }
-
-        .logo:hover {
-            text-shadow: 0 0 8px rgba(28, 110, 143, 0.5);
-        }
-
-        body.dark .logo {
-            background: linear-gradient(135deg, #9ad7f5, #5bb4d0);
-            background-clip: text;
-            -webkit-background-clip: text;
-        }
-
-        .logo span {
-            font-weight: 500;
-            background: none;
-            background-clip: unset;
-            -webkit-background-clip: unset;
-            color: #1c6e8f;
-        }
-
-        body.dark .logo span {
-            color: #7ac6e3;
-        }
-
-        /* ===== FIXED MENU BUTTON - NO BLUR, CRYSTAL CLEAR WITH GLOW ===== */
-        .menu-toggle {
-            display: none;
-            background: linear-gradient(135deg, rgba(28, 110, 143, 0.15), rgba(28, 110, 143, 0.05));
-            border: 1.5px solid rgba(28, 110, 143, 0.5);
-            font-size: 1.9rem;
-            cursor: pointer;
-            color: #1c6e8f;
-            padding: 0.3rem 0.7rem;
-            border-radius: 16px;
-            transition: all 0.25s ease;
-            backdrop-filter: blur(0px); /* NO BLUR - fixed */
-            font-weight: 500;
-            line-height: 1;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .menu-toggle:hover {
-            background: rgba(28, 110, 143, 0.25);
-            border-color: #1c6e8f;
-            box-shadow: 0 0 12px rgba(28, 110, 143, 0.6), 0 2px 8px rgba(0,0,0,0.1);
-            transform: scale(1.02);
-        }
-
-        .menu-toggle:active {
-            transform: scale(0.96);
-        }
-
-        body.dark .menu-toggle {
-            background: rgba(90, 200, 255, 0.12);
-            border-color: rgba(90, 200, 255, 0.6);
-            color: #7fc9f0;
-            box-shadow: 0 0 6px rgba(90, 200, 255, 0.3);
-        }
-
-        body.dark .menu-toggle:hover {
-            background: rgba(90, 200, 255, 0.25);
-            border-color: #6bc8ff;
-            box-shadow: 0 0 16px rgba(90, 200, 255, 0.7);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            list-style: none;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-        }
-
-        .nav-links li {
-            display: flex;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 0.9rem;
-            border-radius: 40px;
-            transition: all 0.2s;
-            color: #1f3b4c;
-            font-size: 1rem;
-        }
-
-        body.dark .nav-links a {
-            color: #e0edf5;
-        }
-
-        .nav-links a:hover {
-            background: rgba(28, 110, 143, 0.1);
-            box-shadow: 0 0 6px rgba(28, 110, 143, 0.3);
-        }
-
-        /* theme toggle buttons with glow */
-        .theme-toggle {
-            background: rgba(28, 110, 143, 0.1);
-            border: 1px solid rgba(28, 110, 143, 0.3);
-            font-size: 1.2rem;
-            padding: 0.4rem 0.8rem;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.25s;
-            backdrop-filter: blur(0px);
-        }
-
-        .theme-toggle:hover {
-            background: rgba(28, 110, 143, 0.2);
-            border-color: #1c6e8f;
-            box-shadow: 0 0 10px rgba(28, 110, 143, 0.5);
-            transform: scale(1.02);
-        }
-
-        body.dark .theme-toggle {
-            background: rgba(90, 200, 255, 0.15);
-            border-color: rgba(90, 200, 255, 0.4);
-            color: #f0f3fa;
-        }
-
-        body.dark .theme-toggle:hover {
-            box-shadow: 0 0 12px rgba(90, 200, 255, 0.6);
-        }
-
-        /* ========= LOGIN CARD - GLOWING BORDER ========= */
-        .login-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1.5rem;
-            margin: 1rem 0 2rem;
-        }
-
-        .login-card {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(2px);
-            border-radius: 2rem;
-            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(28, 110, 143, 0.2), 0 0 15px rgba(28, 110, 143, 0.2);
-            padding: 2rem 1.8rem;
-            width: 100%;
-            max-width: 460px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(28, 110, 143, 0.3);
-            animation: softGlow 3s infinite ease-in-out;
-        }
-
-        .login-card:hover {
-            box-shadow: 0 30px 50px -12px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba(28, 110, 143, 0.4), 0 0 25px rgba(28, 110, 143, 0.4);
-            transform: translateY(-3px);
-        }
-
-        body.dark .login-card {
-            background: rgba(30, 36, 52, 0.95);
-            border: 1px solid rgba(90, 200, 255, 0.4);
-            box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.5), 0 0 12px rgba(90, 200, 255, 0.3);
-            animation: softGlow 3s infinite ease-in-out;
-        }
-
-        body.dark .login-card:hover {
-            box-shadow: 0 30px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(90, 200, 255, 0.5), 0 0 30px rgba(90, 200, 255, 0.5);
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(125deg, #0f3b4f, #2187a8);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            margin-bottom: 0.4rem;
-        }
-
-        body.dark .login-header h1 {
-            background: linear-gradient(125deg, #b3e4ff, #6bc1df);
-            background-clip: text;
-            -webkit-background-clip: text;
-        }
-
-        .login-header p {
-            color: #5f6c7a;
-            font-size: 0.9rem;
-        }
-
-        body.dark .login-header p {
-            color: #9aa9bc;
-        }
-
-        /* Form group with glowing focus */
-        .input-group {
-            margin-bottom: 1.5rem;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .input-group label {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 0.85rem;
-            letter-spacing: 0.3px;
-            color: #2c4b60;
-        }
-
-        body.dark .input-group label {
-            color: #cbdbe6;
-        }
-
-        .input-field {
-            display: flex;
-            align-items: center;
-            background: #f8fafd;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 1.2rem;
-            padding: 0.6rem 1rem;
-            transition: all 0.2s;
-        }
-
-        body.dark .input-field {
-            background: #1f2638;
-            border-color: #2e3a4e;
-        }
-
-        .input-field:focus-within {
-            border-color: #1c6e8f;
-            box-shadow: 0 0 0 3px rgba(28, 110, 143, 0.3), 0 0 12px rgba(28, 110, 143, 0.4);
-            animation: borderGlow 1s infinite;
-        }
-
-        .input-field .icon {
-            font-size: 1.2rem;
-            margin-right: 0.7rem;
-            opacity: 0.7;
-        }
-
-        .input-field input {
-            border: none;
-            background: transparent;
-            width: 100%;
-            font-size: 1rem;
-            padding: 0.5rem 0;
-            outline: none;
-            font-weight: 500;
-            color: #1e2f3f;
-        }
-
-        body.dark .input-field input {
-            color: #ecf3f9;
-        }
-
-        .input-field input::placeholder {
-            color: #a0afbf;
-            font-weight: normal;
-        }
-
-        /* login options */
-        .login-options {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 1rem 0 1.8rem;
-            font-size: 0.8rem;
-            flex-wrap: wrap;
-            gap: 0.7rem;
-        }
-
-        .checkbox {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-        }
-
-        .checkbox input {
-            width: 1rem;
-            height: 1rem;
-            cursor: pointer;
-            accent-color: #1c6e8f;
-        }
-
-        .forgot-link {
-            text-decoration: none;
-            color: #1c6e8f;
-            font-weight: 500;
-            transition: text-shadow 0.2s;
-        }
-
-        .forgot-link:hover {
-            text-shadow: 0 0 6px rgba(28, 110, 143, 0.8);
-        }
-
-        body.dark .forgot-link {
-            color: #79c9e8;
-        }
-
-        /* glowing login button */
-        .login-btn {
-            width: 100%;
-            background: linear-gradient(95deg, #136b89, #0f4f68);
-            border: none;
-            padding: 0.9rem;
-            border-radius: 2rem;
-            font-weight: 700;
-            font-size: 1rem;
-            color: white;
-            cursor: pointer;
-            transition: all 0.25s;
-            margin-bottom: 1.5rem;
-            letter-spacing: 0.5px;
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2), 0 0 8px rgba(28, 110, 143, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-btn:hover {
-            transform: scale(0.98);
-            background: linear-gradient(95deg, #0f5a75, #0a4156);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), 0 0 18px rgba(28, 110, 143, 0.9);
-        }
-
-        .login-btn:active {
-            transform: scale(0.96);
-        }
-
-        .signup-prompt {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #4a5b6b;
-        }
-
-        body.dark .signup-prompt {
-            color: #b1c1d4;
-        }
-
-        .signup-prompt a {
-            color: #1c6e8f;
-            text-decoration: none;
-            font-weight: 600;
-            transition: text-shadow 0.2s;
-        }
-
-        .signup-prompt a:hover {
-            text-shadow: 0 0 6px rgba(28, 110, 143, 0.7);
-        }
-
-        body.dark .signup-prompt a {
-            color: #7fcbe9;
-        }
-
-        .demo-message {
-            margin-top: 1rem;
-            text-align: center;
-            font-size: 0.75rem;
-            background: rgba(28, 110, 143, 0.1);
-            padding: 0.5rem;
-            border-radius: 1rem;
-            color: #136b89;
-            border: 1px solid rgba(28, 110, 143, 0.2);
-        }
-
-        body.dark .demo-message {
-            background: rgba(90, 176, 209, 0.15);
-            color: #addbff;
-            border-color: rgba(90, 176, 209, 0.3);
-        }
-
-        /* mobile view adjustments - FIXED MENU BUTTON BLUR ISSUE */
-        @media (max-width: 680px) {
-            .nav {
-                padding: 0.7rem 1rem;
-            }
-            .logo {
-                font-size: 1.3rem;
-            }
-            .menu-toggle {
-                display: block;
-                order: 1;
-                backdrop-filter: none; /* Explicitly no blur */
-                -webkit-backdrop-filter: none;
-                background: rgba(28, 110, 143, 0.12);
-                border: 1.5px solid rgba(28, 110, 143, 0.6);
-                font-weight: bold;
-            }
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                max-width: 280px;
-                height: 100dvh;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(20px);
-                flex-direction: column;
-                justify-content: center;
-                gap: 2rem;
-                padding: 2rem 1.5rem;
-                box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2);
-                transition: right 0.3s ease-in-out;
-                z-index: 2000;
-                border-radius: 28px 0 0 28px;
-            }
-
-            body.dark .nav-links {
-                background: rgba(22, 28, 42, 0.98);
-                backdrop-filter: blur(20px);
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .nav-links li {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .nav-links a, .nav-links .theme-toggle {
-                width: 80%;
-                text-align: center;
-                padding: 0.8rem;
-                font-size: 1.2rem;
-                backdrop-filter: none;
-            }
-
-            .nav-overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(3px);
-                z-index: 1500;
-            }
-
-            .nav-overlay.active {
-                display: block;
-            }
-
-            .login-card {
-                padding: 1.6rem 1.3rem;
-                border-radius: 1.8rem;
-                margin: 0.5rem;
-            }
-            .login-header h1 {
-                font-size: 1.7rem;
-            }
-            .input-field {
-                padding: 0.5rem 0.9rem;
-            }
-            .login-options {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        @media (min-width: 681px) {
-            .nav-links {
-                display: flex !important;
-                position: static;
-                flex-direction: row;
-                background: transparent;
-                backdrop-filter: none;
-                width: auto;
-                height: auto;
-                box-shadow: none;
-                padding: 0;
-                gap: 1rem;
-            }
-            .nav-overlay {
-                display: none !important;
-            }
-        }
-
-        button {
-            font-family: inherit;
-        }
-
-        footer {
-            text-align: center;
-            font-size: 0.7rem;
-            padding: 1rem;
-            opacity: 0.8;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>লগইন | বিডি প্র্যাকটিক্যাল ল্যাব</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') document.documentElement.classList.add('dark-mode');
+    })();
+  </script>
+  <style>
+    .auth-page-fix {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      background: var(--bg);
+    }
+    .auth-box {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      width: 100%;
+      max-width: 450px;
+    }
+    .auth-box h2 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .form-group label {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .form-group input {
+      padding: 0.8rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .btn-full {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .auth-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: var(--text-muted);
+    }
+    .auth-footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .error-message {
+      background: rgba(239,68,68,0.1);
+      color: #ef4444;
+      padding: 0.7rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      text-align: center;
+      display: none;
+    }
+    .demo-note {
+      text-align: center;
+      font-size: 0.75rem;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      background: rgba(59,130,246,0.1);
+      border-radius: 8px;
+      color: var(--text-muted);
+    }
+  </style>
 </head>
 <body>
-<div class="nav-overlay" id="nav-overlay"></div>
-<header class="header">
+  <div class="nav-overlay" id="nav-overlay"></div>
+  <header class="header">
     <nav class="nav">
-        <a href="index.html" class="logo">BD<span>PracticalLab</span></a>
-        <button class="menu-toggle" id="mobile-menu-toggle" aria-label="Menu">☰</button>
-        <ul class="nav-links" id="nav-links">
-            <li><a href="index.html" id="home-link" data-bn="হোম" data-en="Home">হোম</a></li>
-            <li><button id="lang-toggle" class="theme-toggle">🌐 EN</button></li>
-            <li><button id="theme-toggle" class="theme-toggle">🌙</button></li>
-        </ul>
+      <a href="index.html" class="logo">BD<span>PracticalLab</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">হোম</a></li>
+        <li><button id="themeToggle" class="theme-toggle">🌙</button></li>
+      </ul>
     </nav>
-</header>
+  </header>
 
-<main class="login-container">
-    <div class="login-card">
-        <div class="login-header">
-            <h1 id="login-title">Sign In</h1>
-            <p id="login-sub">Access your BD PracticalLab account</p>
+  <div class="auth-page-fix">
+    <div class="auth-box">
+      <h2>সাইন ইন</h2>
+      <p style="text-align: center; color: var(--text-muted); margin-bottom: 1.5rem;">আপনার অ্যাকাউন্টে প্রবেশ করুন</p>
+      
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label for="email">ইমেইল ঠিকানা</label>
+          <input type="email" id="email" name="email" placeholder="example@mail.com" required autocomplete="email">
         </div>
-        <form id="login-form" action="#" method="post">
-            <div class="input-group">
-                <label id="email-label" for="email">Email Address</label>
-                <div class="input-field">
-                    <span class="icon">📧</span>
-                    <input type="email" id="email" name="email" placeholder="hello@example.com" autocomplete="email" required>
-                </div>
-            </div>
-            <div class="input-group">
-                <label id="password-label" for="password">Password</label>
-                <div class="input-field">
-                    <span class="icon">🔒</span>
-                    <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
-                </div>
-            </div>
-            <div class="login-options">
-                <label class="checkbox">
-                    <input type="checkbox" id="remember"> <span id="remember-text">Remember me</span>
-                </label>
-                <a href="#" id="forgot-text" class="forgot-link">Forgot password?</a>
-            </div>
-            <button type="submit" class="login-btn" id="login-btn-text">Log In</button>
-            <div class="signup-prompt">
-                <span id="no-account">Don't have an account?</span> <a href="#" id="signup-link">Create account</a>
-            </div>
-        </form>
-        <div class="demo-message" id="demo-message">
-            ✨🔐 GLOW MODE: any email + password (demo)
+        <div class="form-group">
+          <label for="password">পাসওয়ার্ড</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
         </div>
+        <button type="submit" class="btn btn-full">লগইন</button>
+        <div id="errorMsg" class="error-message"></div>
+      </form>
+
+      <div class="auth-footer">
+        <p>অ্যাকাউন্ট নেই? <a href="register.html">রেজিস্ট্রেশন করুন</a></p>
+      </div>
+      <div class="demo-note">
+        ✨ ডেমো মোড: যেকোনো ইমেইল ও পাসওয়ার্ড দিয়ে লগইন করুন (Firebase সংযোগের জন্য কনফিগার করুন)
+      </div>
     </div>
-</main>
-<footer>
-    <span id="footer-text">© 2025 BD PracticalLab — Neon Secure Access</span>
-</footer>
+  </div>
 
-<script>
-    // -------- MOBILE MENU (FIXED) ----------
-    const menuToggle = document.getElementById('mobile-menu-toggle');
-    const navLinks = document.getElementById('nav-links');
-    const overlay = document.getElementById('nav-overlay');
-
-    function closeMenu() {
-        if (navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-
-    function openMenu() {
-        navLinks.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (navLinks.classList.contains('active')) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        });
-    }
-
-    overlay.addEventListener('click', closeMenu);
-
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 680 && navLinks.classList.contains('active')) {
-            closeMenu();
-        }
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-            closeMenu();
-        }
-    });
-
-    // DARK MODE
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const rootBody = document.body;
-    const loadTheme = () => {
-        const savedTheme = localStorage.getItem('bdlab_theme');
-        if (savedTheme === 'dark') {
-            rootBody.classList.add('dark');
-            if (themeToggleBtn) themeToggleBtn.textContent = '☀️';
+  <script src="script.js"></script>
+  <script type="module">
+    import { auth, signInWithEmailAndPassword } from './firebase-config.js';
+    
+    const form = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      errorMsg.style.display = 'none';
+      
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        window.location.href = 'dashboard.html';
+      } catch (err) {
+        // Demo mode: allow any login if Firebase not configured
+        if (err.code === 'auth/invalid-api-key' || err.code === 'auth/configuration-not-found') {
+          alert(`✨ ডেমো লগইন সফল!\nইমেইল: ${email}\n\n( Firebase কনফিগার করুন রিয়েল অথেন্টিকেশনের জন্য )`);
+          window.location.href = 'dashboard.html';
         } else {
-            rootBody.classList.remove('dark');
-            if (themeToggleBtn) themeToggleBtn.textContent = '🌙';
+          errorMsg.textContent = err.code === 'auth/user-not-found' ? 'ইমেইল বা পাসওয়ার্ড ভুল' : 'লগইন ব্যর্থ হয়েছে';
+          errorMsg.style.display = 'block';
         }
-    };
-    if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-            if (rootBody.classList.contains('dark')) {
-                rootBody.classList.remove('dark');
-                localStorage.setItem('bdlab_theme', 'light');
-                themeToggleBtn.textContent = '🌙';
-            } else {
-                rootBody.classList.add('dark');
-                localStorage.setItem('bdlab_theme', 'dark');
-                themeToggleBtn.textContent = '☀️';
-            }
-        });
-    }
-    loadTheme();
-
-    // BANGLA / ENGLISH
-    let currentLang = 'bn';
-    const langToggleBtn = document.getElementById('lang-toggle');
-    const homeLink = document.getElementById('home-link');
-    const loginTitle = document.getElementById('login-title');
-    const loginSub = document.getElementById('login-sub');
-    const emailLabel = document.getElementById('email-label');
-    const passwordLabel = document.getElementById('password-label');
-    const rememberText = document.getElementById('remember-text');
-    const forgotText = document.getElementById('forgot-text');
-    const loginBtnText = document.getElementById('login-btn-text');
-    const noAccountSpan = document.getElementById('no-account');
-    const signupLinkText = document.getElementById('signup-link');
-    const footerSpan = document.getElementById('footer-text');
-    const demoMsg = document.getElementById('demo-message');
-
-    const translations = {
-        bn: {
-            home: 'হোম',
-            loginTitle: 'সাইন ইন',
-            loginSub: 'আপনার BD PracticalLab অ্যাকাউন্টে প্রবেশ করুন',
-            emailLabel: 'ইমেইল ঠিকানা',
-            passwordLabel: 'পাসওয়ার্ড',
-            remember: 'মনে রাখুন',
-            forgot: 'পাসওয়ার্ড ভুলে গেছেন?',
-            loginBtn: 'লগইন',
-            noAccount: 'অ্যাকাউন্ট নেই?',
-            signupLink: 'একাউন্ট তৈরি করুন',
-            footer: '© ২০২৫ বিডি প্র্যাকটিক্যাল ল্যাব — নিয়ন গ্লো অ্যাক্সেস',
-            demoMsg: '✨🔐 গ্লো মোড: যেকোনো ইমেইল + পাসওয়ার্ড (ডেমো)'
-        },
-        en: {
-            home: 'Home',
-            loginTitle: 'Sign In',
-            loginSub: 'Access your BD PracticalLab account',
-            emailLabel: 'Email Address',
-            passwordLabel: 'Password',
-            remember: 'Remember me',
-            forgot: 'Forgot password?',
-            loginBtn: 'Log In',
-            noAccount: "Don't have an account?",
-            signupLink: 'Create account',
-            footer: '© 2025 BD PracticalLab — Neon Glow Access',
-            demoMsg: '✨🔐 GLOW MODE: any email + password (demo)'
-        }
-    };
-
-    function updateLanguage(lang) {
-        const t = translations[lang];
-        if (!t) return;
-        homeLink.textContent = t.home;
-        loginTitle.textContent = t.loginTitle;
-        loginSub.textContent = t.loginSub;
-        emailLabel.textContent = t.emailLabel;
-        passwordLabel.textContent = t.passwordLabel;
-        rememberText.textContent = t.remember;
-        forgotText.textContent = t.forgot;
-        loginBtnText.textContent = t.loginBtn;
-        noAccountSpan.textContent = t.noAccount;
-        signupLinkText.textContent = t.signupLink;
-        footerSpan.textContent = t.footer;
-        demoMsg.innerHTML = t.demoMsg;
-        if (lang === 'bn') {
-            langToggleBtn.innerHTML = '🌐 EN';
-        } else {
-            langToggleBtn.innerHTML = '🌐 বাংলা';
-        }
-        localStorage.setItem('bdlab_lang', lang);
-        currentLang = lang;
-    }
-
-    const savedLang = localStorage.getItem('bdlab_lang');
-    if (savedLang === 'en') {
-        updateLanguage('en');
-    } else {
-        updateLanguage('bn');
-    }
-
-    if (langToggleBtn) {
-        langToggleBtn.addEventListener('click', () => {
-            if (currentLang === 'bn') updateLanguage('en');
-            else updateLanguage('bn');
-        });
-    }
-
-    // LOGIN DEMO
-    const loginForm = document.getElementById('login-form');
-    if (loginForm) {
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const emailInput = document.getElementById('email');
-            const passwordInput = document.getElementById('password');
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
-            if (!email) {
-                alert(currentLang === 'bn' ? 'দয়া করে একটি ইমেইল ঠিকানা দিন' : 'Please enter an email address');
-                return;
-            }
-            if (!password) {
-                alert(currentLang === 'bn' ? 'পাসওয়ার্ড দিন' : 'Please enter your password');
-                return;
-            }
-            const successMsg = currentLang === 'bn' 
-                ? `✨ স্বাগতম! (গ্লো ডেমো লগইন: ${email}) ✨` 
-                : `✨ Welcome! (Glow Demo Login: ${email}) ✨`;
-            alert(successMsg);
-        });
-    }
-
-    const forgotLink = document.getElementById('forgot-text');
-    const signupAction = document.getElementById('signup-link');
-    if (forgotLink) {
-        forgotLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            alert(currentLang === 'bn' ? '🌟 পাসওয়ার্ড পুনরুদ্ধার ডেমো (যোগাযোগ করুন)' : '🌟 Password reset demo (contact support)');
-        });
-    }
-    if (signupAction) {
-        signupAction.addEventListener('click', (e) => {
-            e.preventDefault();
-            alert(currentLang === 'bn' ? '🚀 একাউন্ট তৈরি ডেমো : শীঘ্রই আসছে' : '🚀 Create account demo: coming soon');
-        });
-    }
-
-    // Close menu on nav item click (mobile)
-    const allNavItems = document.querySelectorAll('.nav-links a, .nav-links button');
-    allNavItems.forEach(item => {
-        item.addEventListener('click', () => {
-            if (window.innerWidth <= 680) {
-                setTimeout(() => { closeMenu(); }, 100);
-            }
-        });
+      }
     });
-</script>
+  </script>
 </body>
 </html>

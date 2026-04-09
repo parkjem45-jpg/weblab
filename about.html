@@ -2,25 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>About | BD Practical Lab</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script>if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');</script>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') document.documentElement.classList.add('dark-mode');
+    })();
+  </script>
 </head>
 <body>
+  <div class="nav-overlay" id="nav-overlay"></div>
   <header class="header">
     <nav class="nav">
       <a href="index.html" class="logo">BD<span>PracticalLab</span></a>
-      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
-      <ul class="nav-links">
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html" class="active">About</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀️</button></li>
+        <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button></li>
       </ul>
     </nav>
   </header>
@@ -38,17 +44,20 @@
         <h2 class="section-title">Our Mission</h2>
         <p class="section-subtitle">To deliver fast, maintainable, and beautifully crafted web experiences that just work.</p>
       </div>
-      <div class="values scroll-reveal">
-        <div class="value-item">
-          <h4>🎯 Focus</h4>
+      <div class="values scroll-reveal" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto;">
+        <div class="card">
+          <div class="icon">🎯</div>
+          <h4>Focus</h4>
           <p>We prioritize what matters: performance, accessibility, and clean code.</p>
         </div>
-        <div class="value-item">
-          <h4>🛠️ Craft</h4>
+        <div class="card">
+          <div class="icon">🛠️</div>
+          <h4>Craft</h4>
           <p>Every pixel and millisecond is intentional. No templates, no shortcuts.</p>
         </div>
-        <div class="value-item">
-          <h4>🤝 Partnership</h4>
+        <div class="card">
+          <div class="icon">🤝</div>
+          <h4>Partnership</h4>
           <p>We build with you, not just for you. Transparent, collaborative, reliable.</p>
         </div>
       </div>
@@ -57,7 +66,7 @@
     <section style="background: var(--bg-alt); max-width: 100%; padding: 5rem 5%;">
       <div style="max-width: 1200px; margin: 0 auto;">
         <h2 class="section-title scroll-reveal" style="text-align: center;">Our Process</h2>
-        <div class="grid">
+        <div class="grid" style="margin-top: 2rem;">
           <div class="card scroll-reveal"><h3>1. Discover</h3><p>Understand goals, audience, and technical constraints.</p></div>
           <div class="card scroll-reveal"><h3>2. Design</h3><p>Wireframes, prototypes, and UI/UX validation.</p></div>
           <div class="card scroll-reveal"><h3>3. Develop</h3><p>Clean, semantic, and optimized code deployment.</p></div>
@@ -68,12 +77,32 @@
   </main>
 
   <footer class="footer">
-    <div class="social-links">
-      <a href="#" aria-label="GitHub">🐙</a>
-      <a href="#" aria-label="Twitter">🐦</a>
-      <a href="#" aria-label="LinkedIn">💼</a>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>BD Practical Lab</h3>
+        <p>Crafted for speed & simplicity.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Connect</h4>
+        <div class="social-links" style="display: flex; gap: 1rem;">
+          <a href="#" aria-label="GitHub">🐙</a>
+          <a href="#" aria-label="Twitter">🐦</a>
+          <a href="#" aria-label="LinkedIn">💼</a>
+        </div>
+      </div>
     </div>
-    <p>&copy; <span id="year"></span> BD Practical Lab. Crafted for speed & simplicity.</p>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> BD Practical Lab. Crafted for speed & simplicity.</p>
+    </div>
   </footer>
   <script src="script.js"></script>
 </body>

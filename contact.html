@@ -2,25 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Contact | BD Practical Lab</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script>if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');</script>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') document.documentElement.classList.add('dark-mode');
+    })();
+  </script>
 </head>
 <body>
+  <div class="nav-overlay" id="nav-overlay"></div>
   <header class="header">
     <nav class="nav">
       <a href="index.html" class="logo">BD<span>PracticalLab</span></a>
-      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
-      <ul class="nav-links">
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+      <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="contact.html" class="active">Contact</a></li>
-        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀️</button></li>
+        <li><button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button></li>
       </ul>
     </nav>
   </header>
@@ -29,29 +35,29 @@
     <section class="hero" style="min-height: 50vh; padding-top: 8rem;">
       <div class="hero-content scroll-reveal">
         <h1>Get In Touch</h1>
-        <p>Have a project in mind? Let’s build something exceptional together.</p>
+        <p>Have a project in mind? Let's build something exceptional together.</p>
       </div>
     </section>
 
     <section>
-      <div class="contact-grid">
+      <div class="contact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto;">
         <div class="contact-info scroll-reveal">
-          <div class="info-card">
-            <span>📧</span>
+          <div class="card" style="margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 2rem;">📧</span>
             <div>
               <h3>Email</h3>
               <p>hello@bdpracticallab.com</p>
             </div>
           </div>
-          <div class="info-card">
-            <span>📍</span>
+          <div class="card" style="margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 2rem;">📍</span>
             <div>
               <h3>Location</h3>
               <p>Dhaka, Bangladesh (Remote Worldwide)</p>
             </div>
           </div>
-          <div class="info-card">
-            <span>⏱️</span>
+          <div class="card" style="display: flex; align-items: center; gap: 1rem;">
+            <span style="font-size: 2rem;">⏱️</span>
             <div>
               <h3>Response Time</h3>
               <p>Within 24 hours on business days</p>
@@ -59,23 +65,45 @@
           </div>
         </div>
 
-        <form class="contact-form scroll-reveal" action="https://formspree.io/f/your-form-id" method="POST">
-          <input type="text" name="name" placeholder="Your Name" required>
-          <input type="email" name="email" placeholder="Your Email" required>
-          <textarea name="message" placeholder="Tell us about your project..." rows="5" required></textarea>
-          <button type="submit" class="btn">Send Message</button>
+        <form class="contact-form card scroll-reveal" action="#" method="POST" style="padding: 2rem;">
+          <h3 style="margin-bottom: 1rem;">Send us a message</h3>
+          <input type="text" name="name" placeholder="Your Name" required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text);">
+          <input type="email" name="email" placeholder="Your Email" required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text);">
+          <textarea name="message" placeholder="Tell us about your project..." rows="5" required style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--text); font-family: inherit;"></textarea>
+          <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem; text-align: center;">This is a demo form. In production, connect to Formspree or your backend.</p>
         </form>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="social-links">
-      <a href="#" aria-label="GitHub">🐙</a>
-      <a href="#" aria-label="Twitter">🐦</a>
-      <a href="#" aria-label="LinkedIn">💼</a>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>BD Practical Lab</h3>
+        <p>Crafted for speed & simplicity.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Connect</h4>
+        <div class="social-links" style="display: flex; gap: 1rem;">
+          <a href="#" aria-label="GitHub">🐙</a>
+          <a href="#" aria-label="Twitter">🐦</a>
+          <a href="#" aria-label="LinkedIn">💼</a>
+        </div>
+      </div>
     </div>
-    <p>&copy; <span id="year"></span> BD Practical Lab. Crafted for speed & simplicity.</p>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> BD Practical Lab. Crafted for speed & simplicity.</p>
+    </div>
   </footer>
   <script src="script.js"></script>
 </body>

@@ -2,37 +2,23 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>বিডি প্র্যাকটিক্যাল ল্যাব | HSC ও SSC প্র্যাকটিক্যাল জোন</title>
   <meta name="description" content="HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার সম্পূর্ণ গাইড, নোটস, এবং সর্বশেষ খবর">
   
-  <!-- Google Fonts - Bangla -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
-  <script type="module">
-    import { auth, onAuthStateChanged } from './firebase-config.js';
-    
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        document.getElementById('auth-links').innerHTML = `
-          <a href="dashboard.html" class="btn btn-sm">ড্যাশবোর্ড</a>
-          <button id="logout-btn" class="btn btn-outline btn-sm">লগআউট</button>
-        `;
-        document.getElementById('logout-btn').addEventListener('click', async () => {
-          const { signOut } = await import('./firebase-config.js');
-          await signOut(auth);
-          window.location.href = 'index.html';
-        });
-      } else {
-        document.getElementById('auth-links').innerHTML = `
-          <a href="login.html" class="btn btn-sm">লগইন</a>
-          <a href="register.html" class="btn btn-outline btn-sm">রেজিস্ট্রেশন</a>
-        `;
+  <script>
+    // Theme initialization - prevent flash
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
       }
-    });
+    })();
   </script>
 </head>
 <body>
@@ -41,18 +27,20 @@
 <header class="header">
   <nav class="nav">
     <a href="index.html" class="logo">BD<span>PracticalLab</span></a>
-    <button class="menu-toggle" aria-label="Menu">☰</button>
-    <ul class="nav-links" id="nav-links">
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu" aria-expanded="false">☰</button>
+    <ul class="nav-links" id="navLinks">
       <li><a href="index.html" class="active" data-bn="হোম" data-en="Home">হোম</a></li>
       <li><a href="services.html" data-bn="প্র্যাকটিক্যাল" data-en="Practicals">প্র্যাকটিক্যাল</a></li>
       <li><a href="about.html" data-bn="আমাদের সম্পর্কে" data-en="About">আমাদের সম্পর্কে</a></li>
       <li><a href="contact.html" data-bn="যোগাযোগ" data-en="Contact">যোগাযোগ</a></li>
-      <li id="auth-links">
+      <li id="auth-links" class="auth-links-container">
         <a href="login.html" class="btn btn-sm" data-bn="লগইন" data-en="Login">লগইন</a>
         <a href="register.html" class="btn btn-outline btn-sm" data-bn="রেজিস্ট্রেশন" data-en="Register">রেজিস্ট্রেশন</a>
       </li>
-      <li><button id="lang-toggle" class="theme-toggle" aria-label="Language">🌐 EN</button></li>
-      <li><button id="theme-toggle" class="theme-toggle" aria-label="Theme">🌙</button></li>
+      <li class="nav-controls">
+        <button id="langToggle" class="theme-toggle" aria-label="Toggle Language">🌐 EN</button>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">🌙</button>
+      </li>
     </ul>
   </nav>
 </header>
@@ -61,125 +49,149 @@
 <div class="glowing-marquee">
   <span class="live-badge">🔴 LIVE</span>
   <div class="marquee-track">
-    <span class="marquee-item" data-bn="🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত" data-en="🔥 HSC 2026 Practical Exam Routine Published">🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত</span>
-    <span class="marquee-item" data-bn="📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে" data-en="📖 SSC Physics Practical Notes Updated">📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে</span>
-    <span class="marquee-item" data-bn="⚠️ জরুরি নোটিশ: প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি" data-en="⚠️ Notice: Practical Copy Submission Deadline Feb 10">⚠️ জরুরি নোটিশ: প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি</span>
-    <span class="marquee-item" data-bn="🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য" data-en="🎯 Free Viva Preparation Guide Now Downloadable">🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য</span>
-    <!-- Duplicate for seamless scroll -->
-    <span class="marquee-item" data-bn="🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত" data-en="🔥 HSC 2026 Practical Exam Routine Published">🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত</span>
-    <span class="marquee-item" data-bn="📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে" data-en="📖 SSC Physics Practical Notes Updated">📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে</span>
-    <span class="marquee-item" data-bn="⚠️ জরুরি নোটিশ: প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি" data-en="⚠️ Notice: Practical Copy Submission Deadline Feb 10">⚠️ জরুরি নোটিশ: প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি</span>
-    <span class="marquee-item" data-bn="🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য" data-en="🎯 Free Viva Preparation Guide Now Downloadable">🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য</span>
+    <span class="marquee-item">🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত</span>
+    <span class="marquee-item">📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে</span>
+    <span class="marquee-item">⚠️ জরুরি নোটিশ: প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি</span>
+    <span class="marquee-item">🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য</span>
+    <span class="marquee-item">🔥 HSC ২০২৬ প্র্যাকটিক্যাল পরীক্ষার রুটিন প্রকাশিত</span>
+    <span class="marquee-item">📖 SSC পদার্থবিজ্ঞান প্র্যাকটিক্যাল নোটস আপডেট হয়েছে</span>
+    <span class="marquee-item">⚠️ জরুরি নোটিশ: প্র্যাকটিক্যাল খাতা জমার শেষ তারিখ ১০ ফেব্রুয়ারি</span>
+    <span class="marquee-item">🎯 ফ্রি ভাইভা প্রস্তুতি গাইড এখন ডাউনলোডযোগ্য</span>
   </div>
 </div>
 
-<!-- Hero Section (Add data attributes) -->
+<!-- Hero -->
 <section class="hero">
   <div class="hero-content scroll-reveal">
-    <h1 class="glow-text" data-bn="HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার নির্ভরযোগ্য সঙ্গী" data-en="Your Trusted Companion for HSC & SSC Practical Exams">HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার নির্ভরযোগ্য সঙ্গী</h1>
-    <p data-bn="সর্বশেষ প্র্যাকটিক্যাল গাইড, নোটস, ভাইভা প্রশ্ন এবং পরীক্ষার খবর এক জায়গায়" data-en="Latest practical guides, notes, viva questions & exam updates in one place">সর্বশেষ প্র্যাকটিক্যাল গাইড, নোটস, ভাইভা প্রশ্ন এবং পরীক্ষার খবর এক জায়গায়</p>
-    <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
-      <a href="services.html" class="btn" data-bn="প্র্যাকটিক্যাল দেখুন" data-en="View Practicals">প্র্যাকটিক্যাল দেখুন</a>
-      <a href="register.html" class="btn btn-outline" data-bn="এখনই যুক্ত হোন" data-en="Join Now">এখনই যুক্ত হোন</a>
+    <h1 class="glow-text">HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার নির্ভরযোগ্য সঙ্গী</h1>
+    <p>সর্বশেষ প্র্যাকটিক্যাল গাইড, নোটস, ভাইভা প্রশ্ন এবং পরীক্ষার খবর এক জায়গায়</p>
+    <div class="hero-buttons">
+      <a href="services.html" class="btn">প্র্যাকটিক্যাল দেখুন</a>
+      <a href="register.html" class="btn btn-outline">এখনই যুক্ত হোন</a>
     </div>
   </div>
 </section>
 
-    <!-- Latest News Section -->
-    <section>
-      <div class="section-header scroll-reveal">
-        <h2 class="section-title">সর্বশেষ খবর</h2>
-        <p class="section-subtitle">HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার সর্বশেষ আপডেট</p>
-      </div>
-      <div class="grid">
-        <div class="card scroll-reveal">
-          <span class="badge">HSC 2026</span>
-          <h3> HSC প্র্যাকটিক্যাল পরীক্ষার সময়সূচি প্রকাশ</h3>
-          <p>২০২৬ সালের HSC প্র্যাকটিক্যাল পরীক্ষা ১৫ ফেব্রুয়ারি থেকে শুরু হবে। সকল বোর্ডের সময়সূচি এখানে দেখুন।</p>
-          <a href="#" class="link">বিস্তারিত পড়ুন →</a>
-        </div>
-        <div class="card scroll-reveal">
-          <span class="badge badge-secondary">SSC 2026</span>
-          <h3>🔬 SSC বিজ্ঞান প্র্যাকটিক্যাল গাইড</h3>
-          <p>পদার্থবিজ্ঞান, রসায়ন ও জীববিজ্ঞান - সম্পূর্ণ প্র্যাকটিক্যাল নোটস এবং ভাইভা প্রশ্নাবলী।</p>
-          <a href="#" class="link">ডাউনলোড করুন →</a>
-        </div>
-        <div class="card scroll-reveal">
-          <span class="badge badge-accent">নতুন</span>
-          <h3>💻 আইসিটি প্র্যাকটিক্যাল সমাধান</h3>
-          <p>HSC ও SSC আইসিটি প্র্যাকটিক্যালের সম্পূর্ণ সমাধান এবং প্রজেক্ট আইডিয়া।</p>
-          <a href="#" class="link">এখন দেখুন →</a>
-        </div>
-      </div>
-    </section>
+<!-- Latest News Section -->
+<section>
+  <div class="section-header scroll-reveal">
+    <h2 class="section-title">সর্বশেষ খবর</h2>
+    <p class="section-subtitle">HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার সর্বশেষ আপডেট</p>
+  </div>
+  <div class="grid">
+    <div class="card scroll-reveal">
+      <span class="badge">HSC 2026</span>
+      <h3>📅 HSC প্র্যাকটিক্যাল পরীক্ষার সময়সূচি প্রকাশ</h3>
+      <p>২০২৬ সালের HSC প্র্যাকটিক্যাল পরীক্ষা ১৫ ফেব্রুয়ারি থেকে শুরু হবে। সকল বোর্ডের সময়সূচি এখানে দেখুন।</p>
+      <a href="#" class="link">বিস্তারিত পড়ুন →</a>
+    </div>
+    <div class="card scroll-reveal">
+      <span class="badge badge-secondary">SSC 2026</span>
+      <h3>🔬 SSC বিজ্ঞান প্র্যাকটিক্যাল গাইড</h3>
+      <p>পদার্থবিজ্ঞান, রসায়ন ও জীববিজ্ঞান - সম্পূর্ণ প্র্যাকটিক্যাল নোটস এবং ভাইভা প্রশ্নাবলী।</p>
+      <a href="#" class="link">ডাউনলোড করুন →</a>
+    </div>
+    <div class="card scroll-reveal">
+      <span class="badge badge-accent">নতুন</span>
+      <h3>💻 আইসিটি প্র্যাকটিক্যাল সমাধান</h3>
+      <p>HSC ও SSC আইসিটি প্র্যাকটিক্যালের সম্পূর্ণ সমাধান এবং প্রজেক্ট আইডিয়া।</p>
+      <a href="#" class="link">এখন দেখুন →</a>
+    </div>
+  </div>
+</section>
 
-    <!-- Features -->
-    <section style="background: var(--bg-alt); max-width: 100%; padding: 5rem 5%;">
-      <div style="max-width: 1200px; margin: 0 auto;">
-        <div class="section-header scroll-reveal">
-          <h2 class="section-title">কেন আমাদের বেছে নেবেন?</h2>
-          <p class="section-subtitle">আমরা শিক্ষার্থীদের জন্য নিয়ে এসেছি সম্পূর্ণ ফ্রি এবং নির্ভরযোগ্য তথ্য</p>
-        </div>
-        <div class="grid">
-          <div class="card scroll-reveal">
-            <div class="icon">📚</div>
-            <h3>সম্পূর্ণ প্র্যাকটিক্যাল গাইড</h3>
-            <p>সকল বিষয়ের ধাপে ধাপে প্র্যাকটিক্যাল নির্দেশিকা এবং নমুনা খাতা</p>
-          </div>
-          <div class="card scroll-reveal">
-            <div class="icon">🎯</div>
-            <h3>ভাইভা প্রস্তুতি</h3>
-            <p>গুরুত্বপূর্ণ ভাইভা প্রশ্ন এবং উত্তর যা পরীক্ষায় আসার সম্ভাবনা বেশি</p>
-          </div>
-          <div class="card scroll-reveal">
-            <div class="icon">⚡</div>
-            <h3>দ্রুত আপডেট</h3>
-            <p>পরীক্ষার সময়সূচি, বোর্ডের নোটিশ এবং জরুরি খবর সরাসরি আপনার ইমেইলে</p>
-          </div>
-          <div class="card scroll-reveal">
-            <div class="icon">👨‍🏫</div>
-            <h3>অভিজ্ঞ শিক্ষকদের পরামর্শ</h3>
-            <p>দেশের শীর্ষস্থানীয় শিক্ষকদের টিপস এবং কৌশল</p>
-          </div>
-        </div>
+<!-- Features -->
+<section class="features-section">
+  <div class="features-container">
+    <div class="section-header scroll-reveal">
+      <h2 class="section-title">কেন আমাদের বেছে নেবেন?</h2>
+      <p class="section-subtitle">আমরা শিক্ষার্থীদের জন্য নিয়ে এসেছি সম্পূর্ণ ফ্রি এবং নির্ভরযোগ্য তথ্য</p>
+    </div>
+    <div class="grid">
+      <div class="card scroll-reveal">
+        <div class="icon">📚</div>
+        <h3>সম্পূর্ণ প্র্যাকটিক্যাল গাইড</h3>
+        <p>সকল বিষয়ের ধাপে ধাপে প্র্যাকটিক্যাল নির্দেশিকা এবং নমুনা খাতা</p>
       </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section scroll-reveal">
-      <h2>আজই রেজিস্ট্রেশন করুন</h2>
-      <p>সহস্র শিক্ষার্থীর সাথে যুক্ত হোন এবং প্র্যাকটিক্যাল পরীক্ষায় A+ পাওয়ার সুযোগ নিন</p>
-      <a href="register.html" class="btn btn-large">বিনামূল্যে যুক্ত হোন</a>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-section">
-        <h3>বিডি প্র্যাকটিক্যাল ল্যাব</h3>
-        <p>HSC ও SSC শিক্ষার্থীদের জন্য নির্মিত বাংলাদেশের সবচেয়ে নির্ভরযোগ্য প্র্যাকটিক্যাল শিক্ষা প্ল্যাটফর্ম</p>
+      <div class="card scroll-reveal">
+        <div class="icon">🎯</div>
+        <h3>ভাইভা প্রস্তুতি</h3>
+        <p>গুরুত্বপূর্ণ ভাইভা প্রশ্ন এবং উত্তর যা পরীক্ষায় আসার সম্ভাবনা বেশি</p>
       </div>
-      <div class="footer-section">
-        <h4>দ্রুত লিংক</h4>
-        <ul>
-          <li><a href="services.html">প্র্যাকটিক্যাল সমূহ</a></li>
-          <li><a href="about.html">আমাদের সম্পর্কে</a></li>
-          <li><a href="contact.html">যোগাযোগ</a></li>
-          <li><a href="login.html">লগইন</a></li>
-        </ul>
+      <div class="card scroll-reveal">
+        <div class="icon">⚡</div>
+        <h3>দ্রুত আপডেট</h3>
+        <p>পরীক্ষার সময়সূচি, বোর্ডের নোটিশ এবং জরুরি খবর সরাসরি আপনার ইমেইলে</p>
       </div>
-      <div class="footer-section">
-        <h4>যোগাযোগ</h4>
-        <p>📧 info@bdpracticallab.com</p>
-        <p>📱 01XXX-XXXXXX</p>
-        <p>📍 ঢাকা, বাংলাদেশ</p>
+      <div class="card scroll-reveal">
+        <div class="icon">👨‍🏫</div>
+        <h3>অভিজ্ঞ শিক্ষকদের পরামর্শ</h3>
+        <p>দেশের শীর্ষস্থানীয় শিক্ষকদের টিপস এবং কৌশল</p>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; <span id="year"></span> বিডি প্র্যাকটিক্যাল ল্যাব। সর্বস্বত্ব সংরক্ষিত</p>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section scroll-reveal">
+  <h2>আজই রেজিস্ট্রেশন করুন</h2>
+  <p>সহস্র শিক্ষার্থীর সাথে যুক্ত হোন এবং প্র্যাকটিক্যাল পরীক্ষায় A+ পাওয়ার সুযোগ নিন</p>
+  <a href="register.html" class="btn btn-large">বিনামূল্যে যুক্ত হোন</a>
+</section>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-section">
+      <h3>বিডি প্র্যাকটিক্যাল ল্যাব</h3>
+      <p>HSC ও SSC শিক্ষার্থীদের জন্য নির্মিত বাংলাদেশের সবচেয়ে নির্ভরযোগ্য প্র্যাকটিক্যাল শিক্ষা প্ল্যাটফর্ম</p>
     </div>
-  </footer>
+    <div class="footer-section">
+      <h4>দ্রুত লিংক</h4>
+      <ul>
+        <li><a href="services.html">প্র্যাকটিক্যাল সমূহ</a></li>
+        <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+        <li><a href="contact.html">যোগাযোগ</a></li>
+        <li><a href="login.html">লগইন</a></li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>যোগাযোগ</h4>
+      <p>📧 info@bdpracticallab.com</p>
+      <p>📍 ঢাকা, বাংলাদেশ</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> বিডি প্র্যাকটিক্যাল ল্যাব। সর্বস্বত্ব সংরক্ষিত</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+<script type="module">
+  // Firebase Auth Check for Dashboard link
+  import { auth, onAuthStateChanged, signOut } from './firebase-config.js';
   
-  <script src="script.js"></script>
+  const authLinksContainer = document.getElementById('auth-links');
+  
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      authLinksContainer.innerHTML = `
+        <a href="dashboard.html" class="btn btn-sm">ড্যাশবোর্ড</a>
+        <button id="logoutBtn" class="btn btn-outline btn-sm">লগআউট</button>
+      `;
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+          await signOut(auth);
+          window.location.href = 'index.html';
+        });
+      }
+    } else {
+      authLinksContainer.innerHTML = `
+        <a href="login.html" class="btn btn-sm">লগইন</a>
+        <a href="register.html" class="btn btn-outline btn-sm">রেজিস্ট্রেশন</a>
+      `;
+    }
+  });
+</script>
 </body>
 </html>
