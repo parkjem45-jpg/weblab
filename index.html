@@ -12,7 +12,6 @@
   
   <link rel="stylesheet" href="style.css">
   <script>
-    // Theme initialization - prevent flash
     (function() {
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'dark') {
@@ -23,27 +22,36 @@
 </head>
 <body>
 
-<div class="nav-overlay" id="nav-overlay"></div>
+<!-- OVERLAY - This goes BEHIND the menu (z-index: 10000) -->
+<div class="nav-overlay" id="navOverlay"></div>
+
 <header class="header">
   <nav class="nav">
     <a href="index.html" class="logo">BD<span>PracticalLab</span></a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu" aria-expanded="false">☰</button>
+    <button class="menu-toggle" id="menuBtn">☰</button>
+    
+    <!-- MOBILE MENU DRAWER - This goes ON TOP (z-index: 10001) -->
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="active" data-bn="হোম" data-en="Home">হোম</a></li>
-      <li><a href="services.html" data-bn="প্র্যাকটিক্যাল" data-en="Practicals">প্র্যাকটিক্যাল</a></li>
-      <li><a href="about.html" data-bn="আমাদের সম্পর্কে" data-en="About">আমাদের সম্পর্কে</a></li>
-      <li><a href="contact.html" data-bn="যোগাযোগ" data-en="Contact">যোগাযোগ</a></li>
-      <li id="auth-links" class="auth-links-container">
-        <a href="login.html" class="btn btn-sm" data-bn="লগইন" data-en="Login">লগইন</a>
-        <a href="register.html" class="btn btn-outline btn-sm" data-bn="রেজিস্ট্রেশন" data-en="Register">রেজিস্ট্রেশন</a>
-      </li>
-      <li class="nav-controls">
-        <button id="langToggle" class="theme-toggle" aria-label="Toggle Language">🌐 EN</button>
-        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">🌙</button>
+      <li><a href="index.html" class="active">হোম</a></li>
+      <li><a href="services.html">প্র্যাকটিক্যাল</a></li>
+      <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+      <li><a href="contact.html">যোগাযোগ</a></li>
+      <li class="mobile-auth-links" id="mobileAuthContainer"></li>
+      <li class="mobile-controls">
+        <button id="langBtn" class="theme-toggle">🌐 EN</button>
+        <button id="themeBtn" class="theme-toggle">🌙</button>
       </li>
     </ul>
   </nav>
 </header>
+
+<!-- DESKTOP AUTH (hidden on mobile) -->
+<div class="desktop-auth" id="desktopAuth">
+  <a href="login.html" class="btn btn-sm">লগইন</a>
+  <a href="register.html" class="btn btn-outline btn-sm">রেজিস্ট্রেশন</a>
+  <button id="langBtnDesktop" class="theme-toggle">🌐 EN</button>
+  <button id="themeBtnDesktop" class="theme-toggle">🌙</button>
+</div>
 
 <!-- Marquee -->
 <div class="glowing-marquee">
@@ -82,19 +90,19 @@
     <div class="card scroll-reveal">
       <span class="badge">HSC 2026</span>
       <h3>📅 HSC প্র্যাকটিক্যাল পরীক্ষার সময়সূচি প্রকাশ</h3>
-      <p>২০২৬ সালের HSC প্র্যাকটিক্যাল পরীক্ষা ১৫ ফেব্রুয়ারি থেকে শুরু হবে। সকল বোর্ডের সময়সূচি এখানে দেখুন।</p>
+      <p>২০২৬ সালের HSC প্র্যাকটিক্যাল পরীক্ষা ১৫ ফেব্রুয়ারি থেকে শুরু হবে।</p>
       <a href="#" class="link">বিস্তারিত পড়ুন →</a>
     </div>
     <div class="card scroll-reveal">
       <span class="badge badge-secondary">SSC 2026</span>
       <h3>🔬 SSC বিজ্ঞান প্র্যাকটিক্যাল গাইড</h3>
-      <p>পদার্থবিজ্ঞান, রসায়ন ও জীববিজ্ঞান - সম্পূর্ণ প্র্যাকটিক্যাল নোটস এবং ভাইভা প্রশ্নাবলী।</p>
+      <p>পদার্থবিজ্ঞান, রসায়ন ও জীববিজ্ঞান - সম্পূর্ণ প্র্যাকটিক্যাল নোটস।</p>
       <a href="#" class="link">ডাউনলোড করুন →</a>
     </div>
     <div class="card scroll-reveal">
       <span class="badge badge-accent">নতুন</span>
       <h3>💻 আইসিটি প্র্যাকটিক্যাল সমাধান</h3>
-      <p>HSC ও SSC আইসিটি প্র্যাকটিক্যালের সম্পূর্ণ সমাধান এবং প্রজেক্ট আইডিয়া।</p>
+      <p>HSC ও SSC আইসিটি প্র্যাকটিক্যালের সম্পূর্ণ সমাধান।</p>
       <a href="#" class="link">এখন দেখুন →</a>
     </div>
   </div>
@@ -111,22 +119,22 @@
       <div class="card scroll-reveal">
         <div class="icon">📚</div>
         <h3>সম্পূর্ণ প্র্যাকটিক্যাল গাইড</h3>
-        <p>সকল বিষয়ের ধাপে ধাপে প্র্যাকটিক্যাল নির্দেশিকা এবং নমুনা খাতা</p>
+        <p>সকল বিষয়ের ধাপে ধাপে প্র্যাকটিক্যাল নির্দেশিকা</p>
       </div>
       <div class="card scroll-reveal">
         <div class="icon">🎯</div>
         <h3>ভাইভা প্রস্তুতি</h3>
-        <p>গুরুত্বপূর্ণ ভাইভা প্রশ্ন এবং উত্তর যা পরীক্ষায় আসার সম্ভাবনা বেশি</p>
+        <p>গুরুত্বপূর্ণ ভাইভা প্রশ্ন এবং উত্তর</p>
       </div>
       <div class="card scroll-reveal">
         <div class="icon">⚡</div>
         <h3>দ্রুত আপডেট</h3>
-        <p>পরীক্ষার সময়সূচি, বোর্ডের নোটিশ এবং জরুরি খবর সরাসরি আপনার ইমেইলে</p>
+        <p>পরীক্ষার সময়সূচি এবং জরুরি নোটিশ</p>
       </div>
       <div class="card scroll-reveal">
         <div class="icon">👨‍🏫</div>
         <h3>অভিজ্ঞ শিক্ষকদের পরামর্শ</h3>
-        <p>দেশের শীর্ষস্থানীয় শিক্ষকদের টিপস এবং কৌশল</p>
+        <p>দেশের শীর্ষস্থানীয় শিক্ষকদের টিপস</p>
       </div>
     </div>
   </div>
@@ -135,7 +143,7 @@
 <!-- CTA Section -->
 <section class="cta-section scroll-reveal">
   <h2>আজই রেজিস্ট্রেশন করুন</h2>
-  <p>সহস্র শিক্ষার্থীর সাথে যুক্ত হোন এবং প্র্যাকটিক্যাল পরীক্ষায় A+ পাওয়ার সুযোগ নিন</p>
+  <p>সহস্র শিক্ষার্থীর সাথে যুক্ত হোন এবং A+ পাওয়ার সুযোগ নিন</p>
   <a href="register.html" class="btn btn-large">বিনামূল্যে যুক্ত হোন</a>
 </section>
 
@@ -143,7 +151,7 @@
   <div class="footer-content">
     <div class="footer-section">
       <h3>বিডি প্র্যাকটিক্যাল ল্যাব</h3>
-      <p>HSC ও SSC শিক্ষার্থীদের জন্য নির্মিত বাংলাদেশের সবচেয়ে নির্ভরযোগ্য প্র্যাকটিক্যাল শিক্ষা প্ল্যাটফর্ম</p>
+      <p>HSC ও SSC শিক্ষার্থীদের জন্য নির্মিত প্ল্যাটফর্ম</p>
     </div>
     <div class="footer-section">
       <h4>দ্রুত লিংক</h4>
@@ -161,37 +169,294 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <p>&copy; <span id="year"></span> বিডি প্র্যাকটিক্যাল ল্যাব। সর্বস্বত্ব সংরক্ষিত</p>
+    <p>&copy; <span id="year"></span> বিডি প্র্যাকটিক্যাল ল্যাব</p>
   </div>
 </footer>
 
-<script src="script.js"></script>
-<script type="module">
-  // Firebase Auth Check for Dashboard link
-  import { auth, onAuthStateChanged, signOut } from './firebase-config.js';
+<style>
+  /* Desktop auth styles */
+  .desktop-auth {
+    position: absolute;
+    right: 5%;
+    top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    z-index: 100;
+  }
   
-  const authLinksContainer = document.getElementById('auth-links');
+  .mobile-auth-links, .mobile-controls {
+    display: none;
+  }
   
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      authLinksContainer.innerHTML = `
-        <a href="dashboard.html" class="btn btn-sm">ড্যাশবোর্ড</a>
-        <button id="logoutBtn" class="btn btn-outline btn-sm">লগআউট</button>
-      `;
-      const logoutBtn = document.getElementById('logoutBtn');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', async () => {
-          await signOut(auth);
-          window.location.href = 'index.html';
-        });
+  /* Critical Z-INDEX fix for mobile */
+  @media (max-width: 768px) {
+    .desktop-auth {
+      display: none !important;
+    }
+    
+    .mobile-auth-links, .mobile-controls {
+      display: block !important;
+      width: 100% !important;
+    }
+    
+    .mobile-auth-links a {
+      display: block !important;
+      width: 100% !important;
+      text-align: center !important;
+      margin: 8px 0 !important;
+      padding: 12px !important;
+      pointer-events: auto !important;
+      cursor: pointer !important;
+    }
+    
+    .mobile-controls {
+      display: flex !important;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border, #e2e8f0);
+    }
+    
+    /* Menu button stays on top */
+    .menu-toggle {
+      display: block !important;
+      background: #3b82f6 !important;
+      border: none !important;
+      font-size: 1.6rem !important;
+      cursor: pointer !important;
+      padding: 0.3rem 0.8rem !important;
+      border-radius: 12px !important;
+      color: white !important;
+      position: relative !important;
+      z-index: 10002 !important;
+    }
+    
+    /* Menu drawer - HIGHEST Z-INDEX */
+    .nav-links {
+      position: fixed !important;
+      top: 0 !important;
+      right: -100% !important;
+      width: 75% !important;
+      max-width: 280px !important;
+      height: 100vh !important;
+      background: #ffffff !important;
+      flex-direction: column !important;
+      padding: 5rem 1.5rem 2rem !important;
+      gap: 0.5rem !important;
+      z-index: 10001 !important;
+      transition: right 0.3s ease !important;
+      box-shadow: -5px 0 25px rgba(0,0,0,0.2) !important;
+      display: flex !important;
+      list-style: none !important;
+      margin: 0 !important;
+      overflow-y: auto !important;
+    }
+    
+    .dark-mode .nav-links {
+      background: #1e293b !important;
+    }
+    
+    .nav-links.active {
+      right: 0 !important;
+    }
+    
+    /* Overlay - LOWER Z-INDEX (behind menu) */
+    .nav-overlay {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      background: rgba(0, 0, 0, 0.6) !important;
+      backdrop-filter: blur(4px) !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      transition: opacity 0.3s ease !important;
+      z-index: 10000 !important;
+    }
+    
+    .nav-overlay.active {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    
+    body.menu-open {
+      overflow: hidden !important;
+    }
+    
+    /* All clickable elements in menu */
+    .nav-links a,
+    .nav-links button,
+    .nav-links .btn {
+      pointer-events: auto !important;
+      cursor: pointer !important;
+      position: relative !important;
+      z-index: 10002 !important;
+    }
+  }
+</style>
+
+<script>
+// ===== MOBILE MENU - FIXED =====
+(function() {
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  const overlay = document.getElementById('navOverlay');
+  
+  function closeMenu() {
+    if (navLinks) navLinks.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+    document.body.classList.remove('menu-open');
+    document.body.style.overflow = '';
+    if (menuBtn) menuBtn.innerHTML = '☰';
+  }
+  
+  function openMenu() {
+    if (navLinks) navLinks.classList.add('active');
+    if (overlay) overlay.classList.add('active');
+    document.body.classList.add('menu-open');
+    document.body.style.overflow = 'hidden';
+    if (menuBtn) menuBtn.innerHTML = '✕';
+  }
+  
+  if (menuBtn) {
+    menuBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (navLinks && navLinks.classList.contains('active')) {
+        closeMenu();
+      } else {
+        openMenu();
       }
-    } else {
-      authLinksContainer.innerHTML = `
-        <a href="login.html" class="btn btn-sm">লগইন</a>
-        <a href="register.html" class="btn btn-outline btn-sm">রেজিস্ট্রেশন</a>
-      `;
+    });
+  }
+  
+  if (overlay) {
+    overlay.addEventListener('click', closeMenu);
+  }
+  
+  // Close menu after clicking any link
+  if (navLinks) {
+    const allClickable = navLinks.querySelectorAll('a, button');
+    allClickable.forEach(function(el) {
+      el.addEventListener('click', function() {
+        setTimeout(closeMenu, 150);
+      });
+    });
+  }
+  
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMenu();
+  });
+  
+  window.addEventListener('resize', function() {
+    if (window.innerWidth > 768) closeMenu();
+  });
+})();
+
+// ===== THEME TOGGLE =====
+(function() {
+  const themeBtns = document.querySelectorAll('#themeBtn, #themeBtnDesktop');
+  const html = document.documentElement;
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  
+  if (savedTheme === 'dark') {
+    html.classList.add('dark-mode');
+  }
+  
+  themeBtns.forEach(function(btn) {
+    if (btn) {
+      btn.addEventListener('click', function() {
+        html.classList.toggle('dark-mode');
+        const isDark = html.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        themeBtns.forEach(function(b) {
+          if (b) b.innerHTML = isDark ? '☀️' : '🌙';
+        });
+      });
+      btn.innerHTML = savedTheme === 'dark' ? '☀️' : '🌙';
     }
   });
+})();
+
+// ===== LANGUAGE TOGGLE =====
+(function() {
+  const langBtns = document.querySelectorAll('#langBtn, #langBtnDesktop');
+  let currentLang = localStorage.getItem('lang') || 'bn';
+  
+  function updateLanguage(lang) {
+    document.querySelectorAll('[data-bn][data-en]').forEach(function(el) {
+      el.textContent = lang === 'bn' ? el.getAttribute('data-bn') : el.getAttribute('data-en');
+    });
+    langBtns.forEach(function(btn) {
+      if (btn) btn.textContent = lang === 'bn' ? '🌐 EN' : '🌐 BN';
+    });
+    document.documentElement.lang = lang;
+  }
+  
+  langBtns.forEach(function(btn) {
+    if (btn) {
+      btn.addEventListener('click', function() {
+        currentLang = currentLang === 'bn' ? 'en' : 'bn';
+        localStorage.setItem('lang', currentLang);
+        updateLanguage(currentLang);
+      });
+    }
+  });
+  updateLanguage(currentLang);
+})();
+
+// ===== SCROLL REVEAL =====
+(function() {
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  document.querySelectorAll('.scroll-reveal').forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+
+// ===== DYNAMIC YEAR =====
+const yearSpan = document.getElementById('year');
+if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+// ===== FIREBASE AUTH =====
+(function() {
+  const mobileContainer = document.getElementById('mobileAuthContainer');
+  const desktopAuth = document.getElementById('desktopAuth');
+  
+  // Fallback for when Firebase is not configured
+  if (mobileContainer) {
+    mobileContainer.innerHTML = '<a href="login.html" class="btn btn-sm" style="width:100%;text-align:center;display:block;margin:8px 0;">লগইন</a>' +
+                                '<a href="register.html" class="btn btn-outline btn-sm" style="width:100%;text-align:center;display:block;margin:8px 0;">রেজিস্ট্রেশন</a>';
+  }
+  
+  // Try Firebase if available
+  import('./firebase-config.js').then(function(firebase) {
+    firebase.onAuthStateChanged(firebase.auth, function(user) {
+      if (user && mobileContainer) {
+        mobileContainer.innerHTML = '<a href="dashboard.html" class="btn btn-sm" style="width:100%;text-align:center;display:block;margin:8px 0;">ড্যাশবোর্ড</a>' +
+                                    '<button id="logoutBtnMobile" class="btn btn-outline btn-sm" style="width:100%;text-align:center;display:block;margin:8px 0;">লগআউট</button>';
+        document.getElementById('logoutBtnMobile')?.addEventListener('click', function() {
+          firebase.signOut(firebase.auth).then(function() {
+            window.location.href = 'index.html';
+          });
+        });
+      }
+    });
+  }).catch(function() {
+    // Firebase not configured, fallback already set
+  });
+})();
 </script>
+
 </body>
 </html>

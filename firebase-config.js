@@ -19,7 +19,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // Your Firebase Configuration
-// TODO: Replace with your actual Firebase config from Firebase Console
 const firebaseConfig = {
   apiKey: "AIzaSyAip-b0NLudOoNqLqI2JRZ4kYRzs5Aw42g",
   authDomain: "practicallab-1c1ce.firebaseapp.com",
