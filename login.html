@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>লগইন | বিডি প্র্যাকটিক্যাল ল্যাব</title>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+  <div class="auth-container">
+    <div class="auth-box scroll-reveal">
+      <a href="index.html" class="logo" style="text-align: center; margin-bottom: 2rem; display: block;">
+        বিডি <span>প্র্যাকটিক্যাল ল্যাব</span>
+      </a>
+      
+      <h2>স্বাগতম ফিরে</h2>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">আপনার অ্যাকাউন্টে লগইন করুন</p>
+      
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label for="email">ইমেইল</label>
+          <input type="email" id="email" required placeholder="আপনার ইমেইল দিন">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">পাসওয়ার্ড</label>
+          <input type="password" id="password" required placeholder="আপনার পাসওয়ার্ড">
+        </div>
+        
+        <div class="form-options">
+          <label class="checkbox">
+            <input type="checkbox" id="remember">
+            <span>আমাকে মনে রাখুন</span>
+          </label>
+          <a href="#" class="forgot-link">পাসওয়ার্ড ভুলে গেছেন?</a>
+        </div>
+        
+        <button type="submit" class="btn btn-full">লগইন করুন</button>
+        
+        <div id="login-error" class="error-message" style="display: none;"></div>
+      </form>
+      
+      <div class="auth-divider">
+        <span>অথবা</span>
+      </div>
+      
+      <button class="btn btn-outline btn-full google-btn">
+        <span>🔍</span> গুগল দিয়ে লগইন
+      </button>
+      
+      <p class="auth-footer">
+        অ্যাকাউন্ট নেই? <a href="register.html">এখনই রেজিস্ট্রেশন করুন</a>
+      </p>
+      
+      <a href="index.html" class="back-link">← হোমে ফিরে যান</a>
+    </div>
+  </div>
+
+  <script type="module">
+    import { 
+      auth, 
+      signInWithEmailAndPassword 
+    } from './firebase-config.js';
+
+    const loginForm = document.getElementById('login-form');
+    const errorDiv = document.getElementById('login-error');
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        alert('সফলভাবে লগইন হয়েছে!');
+        window.location.href = 'dashboard.html';
+      } catch (error) {
+        errorDiv.textContent = getBanglaError(error.code);
+        errorDiv.style.display = 'block';
+      }
+    });
+
+    function getBanglaError(code) {
+      const errors = {
+        'auth/user-not-found': 'এই ইমেইল দিয়ে কোনো অ্যাকাউন্ট পাওয়া যায়নি',
+        'auth/wrong-password': 'ভুল পাসওয়ার্ড',
+        'auth/invalid-email': 'অবৈধ ইমেইল এড্রেস',
+        'auth/too-many-requests': 'অনেক বেশি চেষ্টা। কিছুক্ষণ পর আবার চেষ্টা করুন',
+        'auth/network-request-failed': 'ইন্টারনেট সংযোগ চেক করুন'
+      };
+      return errors[code] || 'লগইন করতে সমস্যা হয়েছে। আবার চেষ্টা করুন';
+    }
+  </script>
+</body>
+</html>

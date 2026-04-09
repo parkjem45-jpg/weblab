@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>রেজিস্ট্রেশন | বিডি প্র্যাকটিক্যাল ল্যাব</title>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page">
+  <div class="auth-container">
+    <div class="auth-box scroll-reveal">
+      <a href="index.html" class="logo" style="text-align: center; margin-bottom: 2rem; display: block;">
+        বিডি <span>প্র্যাকটিক্যাল ল্যাব</span>
+      </a>
+      
+      <h2>নতুন অ্যাকাউন্ট তৈরি করুন</h2>
+      <p style="color: var(--text-muted); margin-bottom: 2rem;">HSC/SSC প্র্যাকটিক্যালের সম্পূর্ণ গাইডলাইন পান</p>
+      
+      <form id="register-form" class="auth-form">
+        <div class="form-group">
+          <label for="name">পুরো নাম</label>
+          <input type="text" id="name" required placeholder="আপনার পুরো নাম">
+        </div>
+        
+        <div class="form-group">
+          <label for="class">শ্রেণি</label>
+          <select id="class" required>
+            <option value="">নির্বাচন করুন</option>
+            <option value="ssc">SSC (৯ম-১০ম)</option>
+            <option value="hsc">HSC (১১শ-১২শ)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="board">বোর্ড</label>
+          <select id="board" required>
+            <option value="">নির্বাচন করুন</option>
+            <option value="dhaka">ঢাকা</option>
+            <option value="rajshahi">রাজশাহী</option>
+            <option value="chittagong">চট্টগ্রাম</option>
+            <option value="sylhet">সিলেট</option>
+            <option value="barisal">বরিশাল</option>
+            <option value="khulna">খুলনা</option>
+            <option value="rangpur">রংপুর</option>
+            <option value="mymensingh">ময়মনসিংহ</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">ইমেইল</label>
+          <input type="email" id="email" required placeholder="আপনার ইমেইল">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">পাসওয়ার্ড</label>
+          <input type="password" id="password" required placeholder="ন্যূনতম ৬ অক্ষর" minlength="6">
+        </div>
+        
+        <div class="form-group">
+          <label for="confirm-password">পাসওয়ার্ড নিশ্চিত করুন</label>
+          <input type="password" id="confirm-password" required placeholder="পুনরায় পাসওয়ার্ড দিন">
+        </div>
+        
+        <div class="form-options">
+          <label class="checkbox">
+            <input type="checkbox" id="terms" required>
+            <span>আমি <a href="#">শর্তাবলী</a> মেনে চলতে রাজি আছি</span>
+          </label>
+        </div>
+        
+        <button type="submit" class="btn btn-full">রেজিস্ট্রেশন করুন</button>
+        
+        <div id="register-error" class="error-message" style="display: none;"></div>
+      </form>
+      
+      <div class="auth-divider">
+        <span>অথবা</span>
+      </div>
+      
+      <button class="btn btn-outline btn-full google-btn">
+        <span>🔍</span> গুগল দিয়ে রেজিস্ট্রেশন
+      </button>
+      
+      <p class="auth-footer">
+        ইতিমধ্যে অ্যাকাউন্ট আছে? <a href="login.html">লগইন করুন</a>
+      </p>
+      
+      <a href="index.html" class="back-link">← হোমে ফিরে যান</a>
+    </div>
+  </div>
+
+  <script type="module">
+    import { 
+      auth, 
+      createUserWithEmailAndPassword,
+      updateProfile,
+      db,
+      doc,
+      setDoc
+    } from './firebase-config.js';
+
+    const registerForm = document.getElementById('register-form');
+    const errorDiv = document.getElementById('register-error');
+
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const className = document.getElementById('class').value;
+      const board = document.getElementById('board').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+
+      if (password !== confirmPassword) {
+        errorDiv.textContent = 'পাসওয়ার্ড দুটি মিলছে না!';
+        errorDiv.style.display = 'block';
+        return;
+      }
+
+      try {
+        // Create Firebase Auth user
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // Update profile with name
+        await updateProfile(user, {
+          displayName: name
+        });
+
+        // Save additional data to Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          name: name,
+          email: email,
+          className: className,
+          board: board,
+          createdAt: new Date().toISOString(),
+          role: 'student'
+        });
+
+        alert('সফলভাবে রেজিস্ট্রেশন সম্পন্ন হয়েছে!');
+        window.location.href = 'dashboard.html';
+        
+      } catch (error) {
+        errorDiv.textContent = getBanglaError(error.code);
+        errorDiv.style.display = 'block';
+      }
+    });
+
+    function getBanglaError(code) {
+      const errors = {
+        'auth/email-already-in-use': 'এই ইমেইলটি ইতিমধ্যে ব্যবহার করা হচ্ছে',
+        'auth/invalid-email': 'অবৈধ ইমেইল এড্রেস',
+        'auth/weak-password': 'পাসওয়ার্ড খুব দুর্বল (ন্যূনতম ৬ অক্ষর)',
+        'auth/network-request-failed': 'ইন্টারনেট সংযোগ চেক করুন'
+      };
+      return errors[code] || 'রেজিস্ট্রেশনে সমস্যা হয়েছে। আবার চেষ্টা করুন';
+    }
+  </script>
+</body>
+</html>

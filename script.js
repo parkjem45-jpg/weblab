@@ -5,27 +5,32 @@ const html = document.documentElement;
 const savedTheme = localStorage.getItem('theme') || 'dark';
 if (savedTheme === 'light') html.classList.add('light-mode');
 
-themeToggle.addEventListener('click', () => {
-  html.classList.toggle('light-mode');
-  const isLight = html.classList.contains('light-mode');
-  localStorage.setItem('theme', isLight ? 'light' : 'dark');
-  updateIcon();
-});
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    html.classList.toggle('light-mode');
+    const isLight = html.classList.contains('light-mode');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    updateIcon();
+  });
 
-function updateIcon() {
-  const isLight = html.classList.contains('light-mode');
-  themeToggle.innerHTML = isLight ? '🌙' : '☀️';
-  themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+  function updateIcon() {
+    const isLight = html.classList.contains('light-mode');
+    themeToggle.innerHTML = isLight ? '🌙' : '☀️';
+    themeToggle.setAttribute('aria-label', isLight ? 'ডার্ক মোডে যান' : 'লাইট মোডে যান');
+  }
+  updateIcon();
 }
-updateIcon();
 
 // Mobile Menu
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
-menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => navLinks.classList.remove('active'));
-});
+
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('active'));
+  });
+}
 
 // Active Nav Highlight
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';

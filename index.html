@@ -1,30 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BD Practical Lab | Home</title>
-  <meta name="description" content="Professional, fast, and modern web solutions built for real-world use.">
+  <title>বিডি প্র্যাকটিক্যাল ল্যাব | HSC ও SSC প্র্যাকটিক্যাল জোন</title>
+  <meta name="description" content="HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার সম্পূর্ণ গাইড, নোটস, এবং সর্বশেষ খবর">
+  
+  <!-- Google Fonts - Bangla -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
-  <script>
-    // Prevent flash of unstyled theme
-    if(localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light-mode');
+  <script type="module">
+    import { auth, onAuthStateChanged } from './firebase-config.js';
+    
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        document.getElementById('auth-links').innerHTML = `
+          <a href="dashboard.html" class="btn btn-sm">ড্যাশবোর্ড</a>
+          <button id="logout-btn" class="btn btn-outline btn-sm">লগআউট</button>
+        `;
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+          const { signOut } = await import('./firebase-config.js');
+          await signOut(auth);
+          window.location.href = 'index.html';
+        });
+      } else {
+        document.getElementById('auth-links').innerHTML = `
+          <a href="login.html" class="btn btn-sm">লগইন</a>
+          <a href="register.html" class="btn btn-outline btn-sm">রেজিস্ট্রেশন</a>
+        `;
+      }
+    });
   </script>
 </head>
 <body>
   <header class="header">
     <nav class="nav">
-      <a href="index.html" class="logo">BD<span>PracticalLab</span></a>
-      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <a href="index.html" class="logo">বিডি <span>প্র্যাকটিক্যাল ল্যাব</span></a>
+      <button class="menu-toggle" aria-label="মেনু টগল করুন">☰</button>
       <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">☀️</button></li>
+        <li><a href="index.html" class="active">হোম</a></li>
+        <li><a href="services.html">প্র্যাকটিক্যাল</a></li>
+        <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+        <li><a href="contact.html">যোগাযোগ</a></li>
+        <li id="auth-links">
+          <a href="login.html" class="btn btn-sm">লগইন</a>
+          <a href="register.html" class="btn btn-outline btn-sm">রেজিস্ট্রেশন</a>
+        </li>
+        <li><button id="theme-toggle" class="theme-toggle" aria-label="থিম পরিবর্তন">☀️</button></li>
       </ul>
     </nav>
   </header>
@@ -32,43 +57,110 @@
   <main>
     <section class="hero">
       <div class="hero-content scroll-reveal">
-        <h1>Build. Test. Deploy.</h1>
-        <p>Lightning-fast, production-ready web solutions crafted for modern developers and businesses.</p>
-        <a href="services.html" class="btn">Explore Services</a><br><br><br>
-        <a href="contact.html" class="btn btn-outline" style="margin-left: 1rem;">Get in Touch</a>
+        <h1>HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার নির্ভরযোগ্য সঙ্গী</h1>
+        <p>সর্বশেষ প্র্যাকটিক্যাল গাইড, নোটস, ভাইভা প্রশ্ন এবং পরীক্ষার খবর এক জায়গায়</p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+          <a href="services.html" class="btn">প্র্যাকটিক্যাল দেখুন</a>
+          <a href="register.html" class="btn btn-outline">এখনই যুক্ত হোন</a>
+        </div>
       </div>
     </section>
 
+    <!-- Latest News Section -->
     <section>
       <div class="section-header scroll-reveal">
-        <h2 class="section-title">Why Choose Us</h2>
-        <p class="section-subtitle">We focus on practicality, performance, and clean architecture.</p>
+        <h2 class="section-title">সর্বশেষ খবর</h2>
+        <p class="section-subtitle">HSC ও SSC প্র্যাকটিক্যাল পরীক্ষার সর্বশেষ আপডেট</p>
       </div>
       <div class="grid">
         <div class="card scroll-reveal">
-          <h3>⚡ Blazing Fast</h3>
-          <p>Optimized for 95+ Lighthouse scores. Zero bloat, pure performance.</p>
+          <span class="badge">HSC 2026</span>
+          <h3> HSC প্র্যাকটিক্যাল পরীক্ষার সময়সূচি প্রকাশ</h3>
+          <p>২০২৬ সালের HSC প্র্যাকটিক্যাল পরীক্ষা ১৫ ফেব্রুয়ারি থেকে শুরু হবে। সকল বোর্ডের সময়সূচি এখানে দেখুন।</p>
+          <a href="#" class="link">বিস্তারিত পড়ুন →</a>
         </div>
         <div class="card scroll-reveal">
-          <h3>📱 Fully Responsive</h3>
-          <p>Pixel-perfect on mobile, tablet, and desktop. Built mobile-first.</p>
+          <span class="badge badge-secondary">SSC 2026</span>
+          <h3>🔬 SSC বিজ্ঞান প্র্যাকটিক্যাল গাইড</h3>
+          <p>পদার্থবিজ্ঞান, রসায়ন ও জীববিজ্ঞান - সম্পূর্ণ প্র্যাকটিক্যাল নোটস এবং ভাইভা প্রশ্নাবলী।</p>
+          <a href="#" class="link">ডাউনলোড করুন →</a>
         </div>
         <div class="card scroll-reveal">
-          <h3>🔒 Secure & Reliable</h3>
-          <p>Static hosting, no database vulnerabilities, enterprise-grade uptime.</p>
+          <span class="badge badge-accent">নতুন</span>
+          <h3>💻 আইসিটি প্র্যাকটিক্যাল সমাধান</h3>
+          <p>HSC ও SSC আইসিটি প্র্যাকটিক্যালের সম্পূর্ণ সমাধান এবং প্রজেক্ট আইডিয়া।</p>
+          <a href="#" class="link">এখন দেখুন →</a>
         </div>
       </div>
+    </section>
+
+    <!-- Features -->
+    <section style="background: var(--bg-alt); max-width: 100%; padding: 5rem 5%;">
+      <div style="max-width: 1200px; margin: 0 auto;">
+        <div class="section-header scroll-reveal">
+          <h2 class="section-title">কেন আমাদের বেছে নেবেন?</h2>
+          <p class="section-subtitle">আমরা শিক্ষার্থীদের জন্য নিয়ে এসেছি সম্পূর্ণ ফ্রি এবং নির্ভরযোগ্য তথ্য</p>
+        </div>
+        <div class="grid">
+          <div class="card scroll-reveal">
+            <div class="icon">📚</div>
+            <h3>সম্পূর্ণ প্র্যাকটিক্যাল গাইড</h3>
+            <p>সকল বিষয়ের ধাপে ধাপে প্র্যাকটিক্যাল নির্দেশিকা এবং নমুনা খাতা</p>
+          </div>
+          <div class="card scroll-reveal">
+            <div class="icon">🎯</div>
+            <h3>ভাইভা প্রস্তুতি</h3>
+            <p>গুরুত্বপূর্ণ ভাইভা প্রশ্ন এবং উত্তর যা পরীক্ষায় আসার সম্ভাবনা বেশি</p>
+          </div>
+          <div class="card scroll-reveal">
+            <div class="icon">⚡</div>
+            <h3>দ্রুত আপডেট</h3>
+            <p>পরীক্ষার সময়সূচি, বোর্ডের নোটিশ এবং জরুরি খবর সরাসরি আপনার ইমেইলে</p>
+          </div>
+          <div class="card scroll-reveal">
+            <div class="icon">👨‍🏫</div>
+            <h3>অভিজ্ঞ শিক্ষকদের পরামর্শ</h3>
+            <p>দেশের শীর্ষস্থানীয় শিক্ষকদের টিপস এবং কৌশল</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section scroll-reveal">
+      <h2>আজই রেজিস্ট্রেশন করুন</h2>
+      <p>সহস্র শিক্ষার্থীর সাথে যুক্ত হোন এবং প্র্যাকটিক্যাল পরীক্ষায় A+ পাওয়ার সুযোগ নিন</p>
+      <a href="register.html" class="btn btn-large">বিনামূল্যে যুক্ত হোন</a>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="social-links">
-      <a href="#" aria-label="GitHub">🐙</a>
-      <a href="#" aria-label="Twitter">🐦</a>
-      <a href="#" aria-label="LinkedIn">💼</a>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>বিডি প্র্যাকটিক্যাল ল্যাব</h3>
+        <p>HSC ও SSC শিক্ষার্থীদের জন্য নির্মিত বাংলাদেশের সবচেয়ে নির্ভরযোগ্য প্র্যাকটিক্যাল শিক্ষা প্ল্যাটফর্ম</p>
+      </div>
+      <div class="footer-section">
+        <h4>দ্রুত লিংক</h4>
+        <ul>
+          <li><a href="services.html">প্র্যাকটিক্যাল সমূহ</a></li>
+          <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+          <li><a href="contact.html">যোগাযোগ</a></li>
+          <li><a href="login.html">লগইন</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>যোগাযোগ</h4>
+        <p>📧 info@bdpracticallab.com</p>
+        <p>📱 01XXX-XXXXXX</p>
+        <p>📍 ঢাকা, বাংলাদেশ</p>
+      </div>
     </div>
-    <p>&copy; <span id="year"></span> BD Practical Lab. Crafted for speed & simplicity.</p>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> বিডি প্র্যাকটিক্যাল ল্যাব। সর্বস্বত্ব সংরক্ষিত</p>
+    </div>
   </footer>
+  
   <script src="script.js"></script>
 </body>
 </html>
