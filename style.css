@@ -557,6 +557,7 @@ section {
     right: 0 !important;
   }
   
+  /* OVERLAY - BEHIND THE MENU WITH pointer-events: none */
   .nav-overlay {
     position: fixed !important;
     top: 0 !important;
@@ -565,10 +566,12 @@ section {
     height: 100% !important;
     background: rgba(0, 0, 0, 0.6) !important;
     backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
     opacity: 0 !important;
     visibility: hidden !important;
     transition: opacity 0.3s ease !important;
     z-index: 10000 !important;
+    pointer-events: none !important;
   }
   
   .nav-overlay.active {
@@ -625,4 +628,19 @@ section {
   .hero h1 {
     font-size: 1.6rem;
   }
+}
+
+
+.nav-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(4px) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: opacity 0.3s ease !important;
+    z-index: 10000 !important;
 }
